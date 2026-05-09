@@ -1,4 +1,4 @@
-# globalpulse-mcp
+# Globalpulse-MCP
 
 A [Model Context Protocol](https://modelcontextprotocol.io) server for real-world intelligence — macroeconomics, climate, disasters, trade flows, aviation, and country data. All from globally trusted open APIs with no proprietary subscriptions required.
 
