@@ -1,8 +1,14 @@
-# Globalpulse-MCP
+# 🌐 Globalpulse-MCP
 
 A [Model Context Protocol](https://modelcontextprotocol.io) server for real-world intelligence — macroeconomics, climate, disasters, trade flows, aviation, and country data. All from globally trusted open APIs with no proprietary subscriptions required.
 
-> Built because no MCP server exists for institutional-grade global data — World Bank, UN, NASA, OpenSky, and ERA5 climate all in one place.
+> Built because no MCP server exists for institutional-grade global data — World Bank, UN, OpenSky, and ERA5 climate all in one place.
+
+## ⚡ Public Endpoint (no setup required)
+
+Health check: `https://globalpulse-mcp-production.up.railway.app/health`
+
+---
 
 ## Tools (11)
 
@@ -49,60 +55,39 @@ A [Model Context Protocol](https://modelcontextprotocol.io) server for real-worl
 
 ---
 
-## Getting Started
-
-### Prerequisites
-
-- Node.js 18+
-- No API keys required for most tools (World Bank, Open-Meteo, REST Countries, GDACS are fully open)
-
-### Install
-
-Clone and build locally:
-
-```bash
-git clone https://github.com/gpavan1992/Globalpulse-MCP
-cd Globalpulse-MCP
-npm install && npm run build
-```
-
----
-
 ## Integration
 
 ### Claude Desktop
 
 Edit `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS) or `%APPDATA%\Claude\claude_desktop_config.json` (Windows):
 
-```json
+\`\`\`json
 {
   "mcpServers": {
     "🌐 GlobalPulse MCP": {
-      "command": "node",
-      "args": ["/absolute/path/to/Globalpulse-MCP/dist/index.js"]
+      "command": "npx",
+      "args": [
+        "mcp-remote",
+        "https://globalpulse-mcp-production.up.railway.app/mcp"
+      ]
     }
   }
 }
-```
+\`\`\`
 
 ### Cursor / Windsurf
 
-```json
+\`\`\`json
 {
   "globalpulse": {
-    "command": "node",
-    "args": ["/absolute/path/to/Globalpulse-MCP/dist/index.js"]
+    "command": "npx",
+    "args": [
+      "mcp-remote",
+      "https://globalpulse-mcp-production.up.railway.app/mcp"
+    ]
   }
 }
-```
-
-### HTTP mode (remote / multi-client)
-
-```bash
-TRANSPORT=http PORT=3000 node dist/index.js
-```
-
-Then point your MCP client at `http://localhost:3000/mcp`.
+\`\`\`
 
 ---
 
@@ -157,6 +142,12 @@ See [ROADMAP.md](./ROADMAP.md) for the full build plan — Priority 2 (IMF, Cope
 
 ---
 
+## Contributing
+
+PRs welcome — especially for Priority 2 tools. Open an issue to claim a tool before starting work.
+
+---
+
 ## License
 
-MIT — built by [Pavan Kumar Galiveeti](https://www.linkedin.com/in/pavan-kumar-gundubogula)
+MIT — built by [Pavan Kumar Galiveeti](https://www.linkedin.com/in/pavan-kumar-galiveeti-a44335192/)
