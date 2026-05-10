@@ -6,7 +6,9 @@ A [Model Context Protocol](https://modelcontextprotocol.io) server for real-worl
 
 ## ⚡ Public Endpoint (no setup required)
 
-Health check: `https://globalpulse-mcp-production.up.railway.app/health`
+MCP endpoint: https://globalpulse-mcp-production.up.railway.app/mcp
+
+Health check: https://globalpulse-mcp-production.up.railway.app/health
 
 ---
 
