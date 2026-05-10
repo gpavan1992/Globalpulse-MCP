@@ -1,0 +1,21 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.gpavan1992/globalpulse-mcp",
+  "description": "Real-world intelligence MCP — macroeconomics, climate, disasters, trade & aviation.",
+  "repository": {
+    "url": "https://github.com/gpavan1992/Globalpulse-MCP",
+    "source": "github"
+  },
+  "version": "1.0.0",
+  "packages": [
+    {
+      "registryType": "npm",
+      "identifier": "globalpulse-mcp-server",
+      "version": "1.0.0",
+      "transport": {
+        "type": "stdio"
+      },
+      "environmentVariables": []
+    }
+  ]
+}
