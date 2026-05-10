@@ -1,5 +1,12 @@
 # 🌐 Globalpulse-MCP
 
+[![MCP Registry](https://img.shields.io/badge/MCP_Registry-active-brightgreen)](https://registry.modelcontextprotocol.io/v0.1/servers?search=io.github.gpavan1992/globalpulse-mcp)
+[![npm](https://img.shields.io/npm/v/globalpulse-mcp-server)](https://www.npmjs.com/package/globalpulse-mcp-server)
+[![Railway](https://img.shields.io/badge/Railway-deployed-blueviolet)](https://globalpulse-mcp-production.up.railway.app/health)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![TypeScript](https://img.shields.io/badge/TypeScript-100%25-blue)](https://github.com/gpavan1992/Globalpulse-MCP)
+
+
 A [Model Context Protocol](https://modelcontextprotocol.io) server for real-world intelligence — macroeconomics, climate, disasters, trade flows, aviation, and country data. All from globally trusted open APIs with no proprietary subscriptions required.
 
 > Built because no MCP server exists for institutional-grade global data — World Bank, UN, OpenSky, and ERA5 climate all in one place.
