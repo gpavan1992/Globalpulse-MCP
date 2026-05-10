@@ -1,9 +1,14 @@
 {
   "name": "globalpulse-mcp-server",
   "version": "1.0.0",
+  "description": "Unified real-world intelligence MCP server",
   "main": "dist/index.js",
   "type": "module",
-  "scripts": { "build": "tsc", "start": "node dist/index.js" },
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "tsc --watch"
+  },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.12.0",
     "express": "^4.18.2",
@@ -13,5 +18,9 @@
     "@types/express": "^4.17.21",
     "@types/node": "^20.11.0",
     "typescript": "^5.3.3"
-  }
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "license": "MIT"
 }
