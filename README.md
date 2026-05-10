@@ -75,6 +75,7 @@ Edit `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS) o
 }
 \`\`\`
 
+
 ### Cursor / Windsurf
 
 \`\`\`json
@@ -88,6 +89,7 @@ Edit `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS) o
   }
 }
 \`\`\`
+
 
 ---
 
