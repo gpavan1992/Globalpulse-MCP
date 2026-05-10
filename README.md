@@ -61,6 +61,7 @@ Health check: `https://globalpulse-mcp-production.up.railway.app/health`
 
 Edit `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS) or `%APPDATA%\Claude\claude_desktop_config.json` (Windows):
 
+```json
 {
   "mcpServers": {
     "🌐 GlobalPulse MCP": {
@@ -72,10 +73,10 @@ Edit `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS) o
     }
   }
 }
-
-
+```
 
 ### Cursor / Windsurf
+```json
 
 {
   "globalpulse": {
@@ -86,6 +87,7 @@ Edit `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS) o
     ]
   }
 }
+```
 
 ---
 
