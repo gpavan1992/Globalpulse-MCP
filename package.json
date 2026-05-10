@@ -2,6 +2,7 @@
   "name": "globalpulse-mcp-server",
   "version": "1.0.0",
   "description": "Unified real-world intelligence MCP server",
+  "mcpName": "io.github.gpavan1992/globalpulse-mcp",
   "main": "dist/index.js",
   "type": "module",
   "scripts": {
