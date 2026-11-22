@@ -38,6 +38,11 @@ async function runHttp(): Promise<void> {
   app.get("/health", (_req, res) => {
     res.json({ status: "ok", server: "globalpulse-mcp-server", version: "1.0.0" });
   });
+  app.get("/.well-known/openai-apps-challenge", (_req, res) => {
+    const token = process.env.OPENAI_APPS_CHALLENGE;
+    if (!token) return res.status(404).end();
+    res.type("text/plain").status(200).send(token);
+  });
   const serveIcon = (_req: express.Request, res: express.Response) => {
     res.type("image/png").sendFile(ICON_PATH, err => {
       if (err && !res.headersSent) res.status(404).end();
