@@ -36,7 +36,8 @@ export interface DisasterEvent {
 export interface FlightState {
   icao24: string;
   callsign: string | null;
-  origin_country: string;
+  registration: string | null;
+  aircraft_type: string | null;
   longitude: number | null;
   latitude: number | null;
   altitude_m: number | null;

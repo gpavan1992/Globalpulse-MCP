@@ -24,8 +24,13 @@ That's all.
 
 - **No accounts, cookies or sessions.** The server doesn't ask who you are and
   doesn't set cookies. Each request is handled on its own.
-- **No storage.** The server code has no database, cache or file storage for
-  request data. Nothing is saved after the response is sent.
+- **No storage of your data.** The server has no database or file storage and
+  doesn't keep your requests. The one exception is a short-lived in-memory
+  cache of public flight data: for 60 seconds the server remembers the aircraft
+  positions it just fetched for a map area, so that repeat calls for the same
+  area don't hit the flight providers again. It is keyed by the area (rounded
+  coordinates and radius) only, holds no IP address or other identifier, and is
+  lost when the server restarts.
 - **No logging in our code.** The server doesn't log requests, IP addresses or
   tool parameters. The only things it prints are a start-up message and error
   details if it crashes.
@@ -43,8 +48,8 @@ headers. It identifies itself only as `GlobalPulse-MCP/1.0`.
 |---|---|---|
 | [World Bank](https://api.worldbank.org) | Economic indicators | Country code, indicator code, start and end year |
 | [Open-Meteo](https://open-meteo.com) | Weather forecasts and historical climate | Latitude, longitude, timezone, and dates for historical queries |
-| [GDACS](https://www.gdacs.org) (UN) | Disaster alerts | Event type, alert level, country name (for the by-country tool), result limit |
-| [OpenSky Network](https://opensky-network.org) | Live flights | For the region tool: the bounding-box coordinates you give. For the by-country tool: nothing from you, because the server downloads the global list and filters it itself |
+| [GDACS](https://www.gdacs.org) (UN) | Disaster alerts | Active-disasters tool: nothing from you (the server downloads the latest events and filters them itself). By-country tool: country name, event type and a fixed 5-year date range |
+| [adsb.lol](https://adsb.lol) (primary) and [adsb.fi](https://adsb.fi) (fallback, used only when adsb.lol fails) | Live flights | For the region tool: a centre point and radius worked out from the bounding box you give; a large box is split into several circles, so several requests are sent. For the by-country tool: nothing from you. The server queries fixed circles around major airports in India, Germany or the United States and filters the replies itself |
 | [UN Comtrade](https://comtradeapi.un.org) | Trade flows | Reporter and partner country codes, year, commodity code, trade flow, result limit |
 | [REST Countries](https://restcountries.com) | Country profiles and regional lists | Country name or code, or region name |
 

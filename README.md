@@ -9,7 +9,7 @@
 
 A [Model Context Protocol](https://modelcontextprotocol.io) server for real-world intelligence — macroeconomics, climate, disasters, trade flows, aviation, and country data. All from globally trusted open APIs with no proprietary subscriptions required.
 
-> Built because no MCP server exists for institutional-grade global data — World Bank, UN, OpenSky, and ERA5 climate all in one place.
+> Built because no MCP server exists for institutional-grade global data — World Bank, UN, adsb.lol, and ERA5 climate all in one place.
 
 ## ⚡ Public Endpoint (no setup required)
 
@@ -42,12 +42,12 @@ Health check: https://globalpulse-mcp-production.up.railway.app/health
 | `globalpulse_disasters_get_active` | Live global disaster alerts (earthquakes, cyclones, floods, volcanoes) |
 | `globalpulse_disasters_get_by_country` | Disaster history for a specific country |
 
-### ✈️ Aviation — OpenSky Network
+### ✈️ Aviation — adsb.lol (fallback: adsb.fi)
 
 | Tool | Description |
 |---|---|
-| `globalpulse_aviation_get_live_flights` | Live ADS-B flights in any geographic bounding box |
-| `globalpulse_aviation_get_flights_by_country` | All airborne flights from a specific country right now |
+| `globalpulse_aviation_get_live_flights` | Live ADS-B flights in a bounding box (converted to circles of up to 250 nm; large boxes are split, max 25 requests) |
+| `globalpulse_aviation_get_flights_by_country` | **Approximate** airborne flights registered in India, Germany or the United States, sampled around major hubs (not a national total) |
 
 ### 📦 Trade — UN Comtrade
 
@@ -126,7 +126,7 @@ Once connected, ask your AI agent:
 | Macroeconomics | [World Bank Open Data](https://data.worldbank.org) | CC BY 4.0 | No |
 | Weather & Climate | [Open-Meteo](https://open-meteo.com) + ERA5 | CC BY 4.0 | No |
 | Disaster Alerts | [UN GDACS](https://www.gdacs.org) | UN Open Data | No |
-| Aviation | [OpenSky Network](https://opensky-network.org) | ODbL | No (free tier) |
+| Aviation | [adsb.lol](https://adsb.lol) (primary), [adsb.fi](https://adsb.fi) (fallback) | adsb.lol: see its site. adsb.fi: personal, non-commercial use, attribution required | No |
 | Trade Flows | [UN Comtrade](https://comtradeplus.un.org) | UN Open Data | No (free tier) |
 | Country Data | [REST Countries](https://restcountries.com) | MPL 2.0 | No |
 
@@ -138,7 +138,9 @@ Once connected, ask your AI agent:
 - Weather coordinates use **decimal degrees** (e.g. `19.076, 72.877` for Mumbai)
 - Aviation velocity is displayed as km/h
 - UN Comtrade free tier: limited requests/day — use `"TOTAL"` for `commodity_code` for best availability
-- OpenSky free tier: ~400 requests/day for anonymous access
+- Aviation data comes from [adsb.lol](https://adsb.lol), falling back to [adsb.fi](https://adsb.fi) if adsb.lol fails. adsb.fi's terms allow personal, non-commercial use only and require citing adsb.fi with a link — responses name the provider that served them
+- Aviation limits: both APIs cap the search radius at 250 nm. adsb.lol reports a quota of about 500 requests per day per IP (`x-ratelimit-limit` header) and returns HTTP 429 when bursts exceed its limit; adsb.fi allows 1 request per second. Each tool call can make several upstream requests (a large box up to 25; by-country at most 6), at most 2 in flight at a time. Results are cached in memory for 60 s per area, so repeat calls cost none. When adsb.lol answers HTTP 429, it is skipped (adsb.fi is used directly) until its `retry-after` elapses, or 10 s if no header is sent; the request that hit the 429 waits and retries once if the `retry-after` is 5 s or less
+- `get_flights_by_country` is approximate: ADS-B sources have no per-country query, so it samples circles around major hubs and matches aircraft by ICAO24 address block (registered in that country). Alaska and Hawaii are not covered, and at most 6 hubs are sampled per call, so the United States is flagged as partial coverage (Seattle and Miami are skipped)
 - World Bank data lags 1–2 years for some indicators — use `end_year=2022` for best coverage
 
 ---
