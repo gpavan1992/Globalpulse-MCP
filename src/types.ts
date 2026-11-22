@@ -60,14 +60,17 @@ export interface TradeFlow {
 export interface CountryInfo {
   name: string;
   official_name: string;
+  iso2: string;
+  iso3: string;
   capital: string[];
   region: string;
   subregion: string;
-  population: number;
+  /** From World Bank; null when it has no figure for the territory (or could not be fetched). */
+  population: number | null;
+  population_year: string | null;
   area_km2: number;
   currencies: Record<string, { name: string; symbol: string }>;
   languages: Record<string, string>;
-  timezones: string[];
   calling_codes: string[];
   borders: string[];
   flag_emoji: string;

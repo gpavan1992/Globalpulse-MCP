@@ -1,7 +1,7 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
 import { API_ENDPOINTS, ResponseFormat, CHARACTER_LIMIT } from "../constants.js";
-import { fetchJson, buildUrl, truncateText } from "../services/http.js";
+import { fetchJson, buildUrl, truncateText, RELIABLE } from "../services/http.js";
 import { formatOutput, markdownTable } from "../services/formatters.js";
 
 interface OpenMeteoResponse {
@@ -37,7 +37,7 @@ Examples: Mumbai → lat=19.076, lon=72.877, tz="Asia/Kolkata" | London → lat=
         latitude, longitude, timezone, forecast_days: 7,
         daily: "temperature_2m_max,temperature_2m_min,precipitation_sum,windspeed_10m_max,uv_index_max",
       });
-      const data = await fetchJson<OpenMeteoResponse>(url);
+      const data = await fetchJson<OpenMeteoResponse>(url, {}, RELIABLE);
       const daily = data.daily ?? {};
       const dates = (daily["time"] as string[] | undefined) ?? [];
       const output = formatOutput({ latitude, longitude, timezone, forecast: daily }, () => {
@@ -76,7 +76,7 @@ Args: latitude, longitude, start_date (YYYY-MM-DD), end_date (YYYY-MM-DD), timez
         latitude, longitude, start_date, end_date, timezone,
         daily: "temperature_2m_max,temperature_2m_min,precipitation_sum,windspeed_10m_max",
       });
-      const data = await fetchJson<OpenMeteoResponse>(url);
+      const data = await fetchJson<OpenMeteoResponse>(url, {}, RELIABLE);
       const daily = data.daily ?? {};
       const dates = (daily["time"] as string[] | undefined) ?? [];
       if (dates.length === 0) return { content: [{ type: "text", text: `No data found for ${start_date}→${end_date}. Earliest available: 1940-01-01.` }] };

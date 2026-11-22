@@ -1,22 +1,10 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
 import { API_ENDPOINTS, ResponseFormat, CHARACTER_LIMIT, DEFAULT_LIMIT } from "../constants.js";
-import { fetchJson, buildUrl, truncateText } from "../services/http.js";
+import { fetchJson, buildUrl, truncateText, RELIABLE, describeError } from "../services/http.js";
+import { resolveComtradeCode } from "../services/comtrade.js";
 import { formatOutput, formatNumber, markdownTable } from "../services/formatters.js";
 import type { TradeFlow } from "../types.js";
-
-const COUNTRY_CODES: Record<string, string> = {
-  "world":"0","usa":"842","united states":"842","us":"842","china":"156","cn":"156",
-  "india":"356","in":"356","germany":"276","de":"276","japan":"392","jp":"392",
-  "uk":"826","united kingdom":"826","gb":"826","france":"251","fr":"251",
-  "brazil":"76","br":"76","australia":"36","au":"36","canada":"124","ca":"124",
-  "russia":"643","ru":"643","south korea":"410","kr":"410","singapore":"702","sg":"702",
-  "uae":"784","saudi arabia":"682","indonesia":"360","id":"360","mexico":"484","mx":"484",
-};
-
-function resolveCode(input: string): string {
-  return COUNTRY_CODES[input.toLowerCase().trim()] ?? input;
-}
 
 interface CTItem {
   reporterDesc?: string; reporterCode?: string; partnerDesc?: string; partnerCode?: string;
@@ -42,15 +30,20 @@ Args: reporter, partner (default "world"), year (2000-2023), flow ("all","X","M"
     annotations: { title: "Get Bilateral Trade Flows", readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: true },
   }, async ({ reporter, partner, year, flow, commodity_code, limit, response_format }) => {
     try {
+      const rep = await resolveComtradeCode("reporter", reporter);
+      if (!rep) return { content: [{ type: "text", text: `Unknown reporter "${reporter}". Use a country name, ISO alpha-2/alpha-3 code (e.g. "India", "IN", "IND") or a UN Comtrade numeric code.` }] };
+      const par = await resolveComtradeCode("partner", partner);
+      if (!par) return { content: [{ type: "text", text: `Unknown partner "${partner}". Use a country name, ISO code, "world", or a UN Comtrade numeric code.` }] };
       const params: Record<string, string | number> = {
-        reporterCode: resolveCode(reporter),
-        partnerCode: resolveCode(partner) === "0" ? "0" : resolveCode(partner),
+        reporterCode: rep.code, partnerCode: par.code,
         period: year, cmdCode: commodity_code, maxRecords: limit, includeDesc: "true",
       };
       if (flow !== "all") params["flowCode"] = flow;
       const url = buildUrl(`${API_ENDPOINTS.UN_COMTRADE}/HS`, params);
-      const raw = await fetchJson<CTResponse>(url);
-      if (!raw.data?.length) return { content: [{ type: "text", text: `No trade data for ${reporter}↔${partner} in ${year}. Try year 2021, or use "TOTAL" for commodity_code.` }] };
+      const raw = await fetchJson<CTResponse>(url, {}, RELIABLE);
+      if (!raw.data?.length) {
+        return { content: [{ type: "text", text: `UN Comtrade has no data for ${rep.desc} (code ${rep.code}) \u2194 ${par.desc} (code ${par.code}) in ${year}, commodity ${commodity_code}${flow !== "all" ? `, flow ${flow}` : ""}. The request itself succeeded, so the codes are valid. Possible reasons: the reporter has not filed ${year} data yet (try ${year - 1}), the reporter does not report this partner or commodity separately (try partner "world" or commodity "TOTAL"), or the keyless preview API does not cover it. Reporter and partner codes are UN M49 codes, which differ from ISO numeric ones (India is 699, not 356).` }] };
+      }
       const flows: TradeFlow[] = raw.data.slice(0, limit).map(d => ({
         reporter: d.reporterDesc ?? String(d.reporterCode ?? ""), partner: d.partnerDesc ?? String(d.partnerCode ?? ""),
         flow_direction: d.flowDesc ?? "", commodity_code: String(d.cmdCode ?? "TOTAL"),
@@ -62,7 +55,7 @@ Args: reporter, partner (default "world"), year (2000-2023), flow ("all","X","M"
       }, response_format);
       return { content: [{ type: "text", text: truncateText(output, CHARACTER_LIMIT) }] };
     } catch (err) {
-      return { isError: true, content: [{ type: "text", text: `Error: ${String(err)}` }] };
+      return { isError: true, content: [{ type: "text", text: `Error: ${err instanceof Error ? describeError(err) : String(err)}` }] };
     }
   });
 }

@@ -19,8 +19,8 @@ Foundation layer: the highest-signal, no-key-required APIs with global instituti
 | 7 | `globalpulse_aviation_get_live_flights` | adsb.lol / adsb.fi | Aviation | ✅ Live |
 | 8 | `globalpulse_aviation_get_flights_by_country` | adsb.lol / adsb.fi | Aviation | ✅ Live |
 | 9 | `globalpulse_trade_get_bilateral_flows` | UN Comtrade | Trade | ✅ Live |
-| 10 | `globalpulse_countries_get_profile` | REST Countries | Country Intelligence | ✅ Live |
-| 11 | `globalpulse_countries_get_by_region` | REST Countries | Country Intelligence | ✅ Live |
+| 10 | `globalpulse_countries_get_profile` | mledoze/countries + World Bank | Country Intelligence | ✅ Live |
+| 11 | `globalpulse_countries_get_by_region` | mledoze/countries + World Bank | Country Intelligence | ✅ Live |
 
 ---
 
@@ -154,7 +154,7 @@ Enterprise stickiness. Power users, actuarial analysts, trade lawyers, and globa
 
 | Tier | Status | Tools | APIs |
 |---|---|---|---|
-| Priority 1 — Core | ✅ Live | 11 | World Bank, Open-Meteo, GDACS, adsb.lol / adsb.fi, UN Comtrade, REST Countries |
+| Priority 1 — Core | ✅ Live | 11 | World Bank, Open-Meteo, GDACS, adsb.lol / adsb.fi, UN Comtrade, mledoze/countries |
 | Priority 2 — Differentiation | 🔵 Planned | ~10 | IMF, Copernicus, USGS, Global Forest Watch, OpenAQ, Frankfurter ECB |
 | Priority 3 — Depth | 🟡 Planned | ~8 | WHO GHO, NASA EONET, WTO Stats, NOAA |
 | **Total** | | **~29** | **16 global APIs** |

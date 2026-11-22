@@ -1,7 +1,7 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
 import { API_ENDPOINTS, ResponseFormat, CHARACTER_LIMIT, DEFAULT_LIMIT } from "../constants.js";
-import { fetchJson, buildUrl, truncateText } from "../services/http.js";
+import { fetchJson, buildUrl, truncateText, RELIABLE } from "../services/http.js";
 import { formatOutput, markdownTable, formatDate } from "../services/formatters.js";
 import type { DisasterEvent } from "../types.js";
 
@@ -63,7 +63,7 @@ Args: event_type ("all","EQ","TC","FL","VO","DR","WF"), alert_level ("all","Gree
   }, async ({ event_type, alert_level, limit, response_format }) => {
     try {
       // EVENTS4APP ignores query parameters, so filtering happens here.
-      const raw = await fetchJson<GDACSResponse>(`${API_ENDPOINTS.GDACS}/events/geteventlist/EVENTS4APP`);
+      const raw = await fetchJson<GDACSResponse>(`${API_ENDPOINTS.GDACS}/events/geteventlist/EVENTS4APP`, {}, RELIABLE);
       let events = parseFeatures(raw)
         .filter(({ props }) => event_type === "all" || props.eventtype === event_type)
         .filter(({ props }) => alert_level === "all" || props.alertlevel === alert_level)
@@ -99,7 +99,7 @@ Args: country (e.g. "India", "Philippines"), event_type, limit, response_format`
         fromdate: from.toISOString().slice(0, 10), todate: now.toISOString().slice(0, 10),
       };
       if (event_type !== "all") params["eventlist"] = event_type;
-      const raw = await fetchJson<GDACSResponse>(buildUrl(`${API_ENDPOINTS.GDACS}/events/geteventlist/SEARCH`, params));
+      const raw = await fetchJson<GDACSResponse>(buildUrl(`${API_ENDPOINTS.GDACS}/events/geteventlist/SEARCH`, params), {}, RELIABLE);
       const events = parseFeatures(raw)
         .filter(({ props }) => matchesCountry(props, country))
         .map(x => x.event)

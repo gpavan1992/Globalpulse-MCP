@@ -25,15 +25,18 @@ That's all.
 - **No accounts, cookies or sessions.** The server doesn't ask who you are and
   doesn't set cookies. Each request is handled on its own.
 - **No storage of your data.** The server has no database or file storage and
-  doesn't keep your requests. The one exception is a short-lived in-memory
-  cache of public flight data: for 60 seconds the server remembers the aircraft
-  positions it just fetched for a map area, so that repeat calls for the same
-  area don't hit the flight providers again. It is keyed by the area (rounded
-  coordinates and radius) only, holds no IP address or other identifier, and is
+  doesn't keep your requests. The exceptions are in-memory caches of *public*
+  data, never of your requests: the country list, World Bank population figures
+  and Comtrade code lists (24 hours each), plus live flight data: for 60
+  seconds the server remembers the aircraft positions it just fetched for a map
+  area, so that repeat calls for the same area don't hit the flight providers
+  again. The flight cache is keyed by the area (rounded coordinates and radius)
+  only, holds no IP address or other identifier, and is
   lost when the server restarts.
 - **No logging in our code.** The server doesn't log requests, IP addresses or
-  tool parameters. The only things it prints are a start-up message and error
-  details if it crashes.
+  tool parameters. The only things it prints are a start-up message, error
+  details if it crashes, and short notices when an upstream data source fails
+  (they contain the upstream URL and error, not your request or IP address).
 - **No analytics or tracking** of any kind is built in.
 
 ## Third-party data providers
@@ -46,12 +49,12 @@ headers. It identifies itself only as `GlobalPulse-MCP/1.0`.
 
 | Provider | Used for | What is sent to it |
 |---|---|---|
-| [World Bank](https://api.worldbank.org) | Economic indicators | Country code, indicator code, start and end year |
+| [World Bank](https://api.worldbank.org) | Economic indicators and country populations | Indicator tool: country code, indicator code, start and end year. Country tools: nothing from you (the server downloads the latest population figures for all countries, cached 24 h) |
 | [Open-Meteo](https://open-meteo.com) | Weather forecasts and historical climate | Latitude, longitude, timezone, and dates for historical queries |
 | [GDACS](https://www.gdacs.org) (UN) | Disaster alerts | Active-disasters tool: nothing from you (the server downloads the latest events and filters them itself). By-country tool: country name, event type and a fixed 5-year date range |
 | [adsb.lol](https://adsb.lol) (primary) and [adsb.fi](https://adsb.fi) (fallback, used only when adsb.lol fails) | Live flights | For the region tool: a centre point and radius worked out from the bounding box you give; a large box is split into several circles, so several requests are sent. For the by-country tool: nothing from you. The server queries fixed circles around major airports in India, Germany or the United States and filters the replies itself |
-| [UN Comtrade](https://comtradeapi.un.org) | Trade flows | Reporter and partner country codes, year, commodity code, trade flow, result limit |
-| [REST Countries](https://restcountries.com) | Country profiles and regional lists | Country name or code, or region name |
+| [UN Comtrade](https://comtradeapi.un.org) | Trade flows | Reporter and partner country codes, year, commodity code, trade flow, result limit. The server also downloads Comtrade's public reporter/partner code lists (cached 24 h) to translate country names into codes |
+| [mledoze/countries](https://github.com/mledoze/countries) (served from raw.githubusercontent.com) | Country profiles and regional lists | Nothing from you: the server downloads the whole country list (cached in memory for 24 h) and filters it itself. GitHub sees only the server's request |
 
 Please don't put personal information in tool parameters. They are sent to
 these providers as they are.

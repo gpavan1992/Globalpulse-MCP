@@ -55,12 +55,12 @@ Health check: https://globalpulse-mcp-production.up.railway.app/health
 |---|---|
 | `globalpulse_trade_get_bilateral_flows` | Bilateral import/export flows by country pair and HS commodity code |
 
-### 🗺️ Country Intelligence — REST Countries
+### 🗺️ Country Intelligence — mledoze/countries + World Bank
 
 | Tool | Description |
 |---|---|
-| `globalpulse_countries_get_profile` | Full country profile: capital, population, currencies, languages, borders |
-| `globalpulse_countries_get_by_region` | All countries in a region sorted by population, area, or name |
+| `globalpulse_countries_get_profile` | Country profile: capital, population (World Bank), currencies, languages, borders. Accepts name, ISO alpha-2/alpha-3 |
+| `globalpulse_countries_get_by_region` | Countries in a region or subregion (e.g. "Asia", "South Asia") sorted by population, area, or name |
 
 ---
 
@@ -128,7 +128,7 @@ Once connected, ask your AI agent:
 | Disaster Alerts | [UN GDACS](https://www.gdacs.org) | UN Open Data | No |
 | Aviation | [adsb.lol](https://adsb.lol) (primary), [adsb.fi](https://adsb.fi) (fallback) | adsb.lol: see its site. adsb.fi: personal, non-commercial use, attribution required | No |
 | Trade Flows | [UN Comtrade](https://comtradeplus.un.org) | UN Open Data | No (free tier) |
-| Country Data | [REST Countries](https://restcountries.com) | MPL 2.0 | No |
+| Country Data | [mledoze/countries](https://github.com/mledoze/countries) (static list, cached 24 h) | ODbL 1.0 | No |
 
 ---
 

@@ -1,7 +1,7 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
 import { API_ENDPOINTS, ResponseFormat, CHARACTER_LIMIT } from "../constants.js";
-import { fetchJson, buildUrl, truncateText } from "../services/http.js";
+import { fetchJson, buildUrl, truncateText, RELIABLE } from "../services/http.js";
 import { formatOutput, formatNumber, markdownTable } from "../services/formatters.js";
 import type { WorldBankDataPoint } from "../types.js";
 
@@ -30,7 +30,7 @@ async function fetchWorldBankData(countryCode: string, indicator: string, startY
   const url = buildUrl(`${API_ENDPOINTS.WORLD_BANK}/country/${countryCode}/indicator/${indicator}`, {
     format: "json", date: `${startYear}:${endYear}`, per_page: 50,
   });
-  const raw = await fetchJson<[WBApiMeta, WBDataItem[]] | WBApiMeta[]>(url);
+  const raw = await fetchJson<[WBApiMeta, WBDataItem[]] | WBApiMeta[]>(url, {}, RELIABLE);
   if (!Array.isArray(raw) || raw.length < 2) return [];
   const items = (raw[1] as WBDataItem[] | undefined) ?? [];
   return items
