@@ -25,7 +25,17 @@ Nothing returned by the Service is financial, investment, trade, legal, medical,
 
 ## 5. Third-party sources and their terms
 
-The Service forwards your tool parameters to these providers: World Bank Open Data, Open-Meteo, UN GDACS, UN Comtrade, mledoze/countries (ODbL 1.0) and adsb.lol. Their data remains subject to their own licences and terms, and each is credited in tool output. Flight data comes from adsb.lol under the ODbL 1.0. If you use the data beyond casual personal or research use, you are responsible for reading and complying with each provider's terms. The Operator is not affiliated with or endorsed by any provider.
+The public Global Pulse service uses adsb.lol as its aviation data provider.
+
+Global Pulse retrieves publicly available information from independent third-party data providers, including World Bank Open Data, Open-Meteo, UN GDACS, UN Comtrade, mledoze/countries (ODbL 1.0), and adsb.lol (ODbL 1.0).
+
+The public Global Pulse service uses adsb.lol as its aviation data provider. The optional adsb.fi fallback is disabled on the public deployment. It may be enabled only in separately configured self-hosted deployments, subject to the applicable provider's terms and permissions.
+
+Third-party data remains subject to the original providers' applicable licenses, attribution requirements, usage restrictions, and rate limits. Global Pulse identifies relevant data sources in its tool responses.
+
+Users who reuse, redistribute, or commercially exploit third-party data are responsible for complying with the applicable provider licenses and terms. The availability of data through Global Pulse does not grant additional rights to that data.
+
+Global Pulse is an independent open-source project and is not affiliated with, sponsored by, or endorsed by these third-party providers.
 
 ## 6. Acceptable use
 
