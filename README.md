@@ -3,17 +3,17 @@
 </p>
 
 <p align="center">
-  <a href="https://registry.modelcontextprotocol.io/v0.1/servers?search=io.github.gpavan1992/globalpulse-mcp"><img src="https://img.shields.io/badge/MCP_Registry-active-38BDF8?style=flat" alt="MCP Registry" height="20"></a>
+  <a href="https://registry.modelcontextprotocol.io/v0.1/servers?search=io.github.gpavan1992/globalpulse-mcp"><img src="https://img.shields.io/badge/MCP_Registry-active-2DD4BF?style=flat" alt="MCP Registry" height="20"></a>
   &nbsp;
-  <a href="https://www.npmjs.com/package/globalpulse-mcp-server"><img src="https://img.shields.io/npm/v/globalpulse-mcp-server?style=flat&color=38BDF8" alt="npm" height="20"></a>
+  <a href="https://www.npmjs.com/package/globalpulse-mcp-server"><img src="https://img.shields.io/npm/v/globalpulse-mcp-server?style=flat&color=2DD4BF" alt="npm" height="20"></a>
   &nbsp;
-  <a href="https://globalpulse-mcp-production.up.railway.app/health"><img src="https://img.shields.io/badge/Railway-deployed-38BDF8?style=flat" alt="Railway" height="20"></a>
+  <a href="https://globalpulse-mcp-production.up.railway.app/health"><img src="https://img.shields.io/badge/Railway-deployed-2DD4BF?style=flat" alt="Railway" height="20"></a>
   &nbsp;
-  <img src="https://img.shields.io/badge/tools-11-38BDF8?style=flat" alt="11 tools" height="20">
+  <img src="https://img.shields.io/badge/tools-11-2DD4BF?style=flat" alt="11 tools" height="20">
   &nbsp;
-  <img src="https://img.shields.io/badge/API_keys-none-38BDF8?style=flat" alt="No API keys" height="20">
+  <img src="https://img.shields.io/badge/API_keys-none-2DD4BF?style=flat" alt="No API keys" height="20">
   &nbsp;
-  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-38BDF8?style=flat" alt="MIT license" height="20"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-2DD4BF?style=flat" alt="MIT license" height="20"></a>
 </p>
 
 <p align="center">

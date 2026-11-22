@@ -1,16 +1,16 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" width="96" height="96" role="img" aria-labelledby="t d">
-  <title id="t">GlobalPulse</title>
-  <desc id="d">GlobalPulse globe mark</desc>
-  <style>
-    text{font-family:Inter,"Segoe UI",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}
-    .mono{font-family:"JetBrains Mono","SFMono-Regular",Menlo,Consolas,"DejaVu Sans Mono",monospace}
-    
-  </style>
-<g transform="translate(0 0) scale(1.0)">
-    <rect width="96" height="96" rx="22" fill="#38BDF8"/>
-    <circle cx="48" cy="48" r="29" fill="none" stroke="#0a1426" stroke-width="5"/>
-    <ellipse cx="48" cy="48" rx="12" ry="29" fill="none" stroke="#0a1426" stroke-width="4.5"/>
-    <path d="M19 48H77" stroke="#0a1426" stroke-width="4.5" stroke-linecap="round"/>
-    <path d="M24 33H72 M24 63H72" stroke="#0a1426" stroke-width="3.5" stroke-linecap="round" opacity=".75"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <clipPath id="g"><circle cx="256" cy="256" r="150"/></clipPath>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="#0B1F3A"/>
+  <g fill="none" stroke="#2DD4BF" stroke-width="10" stroke-linecap="round">
+    <circle cx="256" cy="256" r="150"/>
+    <ellipse cx="256" cy="256" rx="72" ry="150"/>
+    <g clip-path="url(#g)" opacity="0.75">
+      <line x1="90" y1="180" x2="422" y2="180"/>
+      <line x1="90" y1="332" x2="422" y2="332"/>
+    </g>
   </g>
+  <polyline points="64,256 176,256 208,180 248,342 286,214 312,256 448,256"
+            fill="none" stroke="#FFB547" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>

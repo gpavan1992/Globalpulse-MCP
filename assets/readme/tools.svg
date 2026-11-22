@@ -8,27 +8,27 @@
   </style>
   <rect width="1280" height="640" rx="24" fill="#0d1b33"/>
   <text x="40" y="58" font-size="28" font-weight="800" fill="#E6EEF8">Eleven tools, six areas</text>
-  <text x="40" y="88" font-size="17" fill="#93A5BF">Ask in plain language. Your AI client picks the tool. Every tool name starts with <tspan class="mono" fill="#38BDF8">globalpulse_</tspan></text>
+  <text x="40" y="88" font-size="17" fill="#93A5BF">Ask in plain language. Your AI client picks the tool. Every tool name starts with <tspan class="mono" fill="#2DD4BF">globalpulse_</tspan></text>
   <g transform="translate(40 112)">
     <rect width="384" height="246" rx="18" fill="#111d33" stroke="#223455"/>
-    <path d="M18 0H366" stroke="#38BDF8" stroke-width="4" stroke-linecap="round"/>
-    <rect x="22" y="26" width="56" height="56" rx="14" fill="#38BDF8" fill-opacity=".14"/>
-    <g transform="translate(28 32)"><path d="M10 33V25M19 33V18M28 33V22M10 14L19 10 28 16 35 9" fill="none" stroke="#38BDF8" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></g>
+    <path d="M18 0H366" stroke="#2DD4BF" stroke-width="4" stroke-linecap="round"/>
+    <rect x="22" y="26" width="56" height="56" rx="14" fill="#2DD4BF" fill-opacity=".14"/>
+    <g transform="translate(28 32)"><path d="M10 33V25M19 33V18M28 33V22M10 14L19 10 28 16 35 9" fill="none" stroke="#2DD4BF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></g>
     <text x="94" y="50" font-size="20" font-weight="800" fill="#E6EEF8">Macroeconomics</text>
     <text x="94" y="74" font-size="14" fill="#93A5BF">World Bank Open Data</text>
-    <rect x="22" y="102" width="340" height="28" rx="8" fill="#0a1220"/><text class="mono" x="34" y="121" font-size="14" fill="#38BDF8">worldbank_get_indicator</text>
-    <rect x="22" y="136" width="340" height="28" rx="8" fill="#0a1220"/><text class="mono" x="34" y="155" font-size="14" fill="#38BDF8">worldbank_list_indicators</text>
+    <rect x="22" y="102" width="340" height="28" rx="8" fill="#0a1220"/><text class="mono" x="34" y="121" font-size="14" fill="#2DD4BF">worldbank_get_indicator</text>
+    <rect x="22" y="136" width="340" height="28" rx="8" fill="#0a1220"/><text class="mono" x="34" y="155" font-size="14" fill="#2DD4BF">worldbank_list_indicators</text>
     <text x="22" y="214" font-size="15" font-style="italic" fill="#C3D0E2">“India's GDP and inflation, last 10 years?”</text>
   </g>
   <g transform="translate(448 112)">
     <rect width="384" height="246" rx="18" fill="#111d33" stroke="#223455"/>
-    <path d="M18 0H366" stroke="#FBBF24" stroke-width="4" stroke-linecap="round"/>
-    <rect x="22" y="26" width="56" height="56" rx="14" fill="#FBBF24" fill-opacity=".14"/>
-    <g transform="translate(28 32)"><circle cx="22" cy="22" r="7" fill="none" stroke="#FBBF24" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 22 m12.0 0.0 l4.0 0.0" fill="none" stroke="#FBBF24" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 22 m8.5 8.5 l2.8 2.8" fill="none" stroke="#FBBF24" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 22 m0.0 12.0 l0.0 4.0" fill="none" stroke="#FBBF24" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 22 m-8.5 8.5 l-2.8 2.8" fill="none" stroke="#FBBF24" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 22 m-12.0 0.0 l-4.0 0.0" fill="none" stroke="#FBBF24" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 22 m-8.5 -8.5 l-2.8 -2.8" fill="none" stroke="#FBBF24" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 22 m-0.0 -12.0 l-0.0 -4.0" fill="none" stroke="#FBBF24" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 22 m8.5 -8.5 l2.8 -2.8" fill="none" stroke="#FBBF24" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></g>
+    <path d="M18 0H366" stroke="#FFB547" stroke-width="4" stroke-linecap="round"/>
+    <rect x="22" y="26" width="56" height="56" rx="14" fill="#FFB547" fill-opacity=".14"/>
+    <g transform="translate(28 32)"><circle cx="22" cy="22" r="7" fill="none" stroke="#FFB547" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 22 m12.0 0.0 l4.0 0.0" fill="none" stroke="#FFB547" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 22 m8.5 8.5 l2.8 2.8" fill="none" stroke="#FFB547" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 22 m0.0 12.0 l0.0 4.0" fill="none" stroke="#FFB547" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 22 m-8.5 8.5 l-2.8 2.8" fill="none" stroke="#FFB547" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 22 m-12.0 0.0 l-4.0 0.0" fill="none" stroke="#FFB547" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 22 m-8.5 -8.5 l-2.8 -2.8" fill="none" stroke="#FFB547" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 22 m-0.0 -12.0 l-0.0 -4.0" fill="none" stroke="#FFB547" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 22 m8.5 -8.5 l2.8 -2.8" fill="none" stroke="#FFB547" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></g>
     <text x="94" y="50" font-size="20" font-weight="800" fill="#E6EEF8">Climate and weather</text>
     <text x="94" y="74" font-size="14" fill="#93A5BF">Open-Meteo · ERA5</text>
-    <rect x="22" y="102" width="340" height="28" rx="8" fill="#0a1220"/><text class="mono" x="34" y="121" font-size="14" fill="#FBBF24">weather_get_forecast</text>
-    <rect x="22" y="136" width="340" height="28" rx="8" fill="#0a1220"/><text class="mono" x="34" y="155" font-size="14" fill="#FBBF24">weather_get_historical</text>
+    <rect x="22" y="102" width="340" height="28" rx="8" fill="#0a1220"/><text class="mono" x="34" y="121" font-size="14" fill="#FFB547">weather_get_forecast</text>
+    <rect x="22" y="136" width="340" height="28" rx="8" fill="#0a1220"/><text class="mono" x="34" y="155" font-size="14" fill="#FFB547">weather_get_historical</text>
     <text x="22" y="214" font-size="15" font-style="italic" fill="#C3D0E2">“Will it rain in Mumbai this week?”</text>
   </g>
   <g transform="translate(856 112)">
@@ -55,23 +55,23 @@
   </g>
   <g transform="translate(448 384)">
     <rect width="384" height="246" rx="18" fill="#111d33" stroke="#223455"/>
-    <path d="M18 0H366" stroke="#34D399" stroke-width="4" stroke-linecap="round"/>
-    <rect x="22" y="26" width="56" height="56" rx="14" fill="#34D399" fill-opacity=".14"/>
-    <g transform="translate(28 32)"><path d="M8 16H34M28 10L34 16L28 22M36 29H10M16 23L10 29L16 35" fill="none" stroke="#34D399" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></g>
+    <path d="M18 0H366" stroke="#4ADE80" stroke-width="4" stroke-linecap="round"/>
+    <rect x="22" y="26" width="56" height="56" rx="14" fill="#4ADE80" fill-opacity=".14"/>
+    <g transform="translate(28 32)"><path d="M8 16H34M28 10L34 16L28 22M36 29H10M16 23L10 29L16 35" fill="none" stroke="#4ADE80" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></g>
     <text x="94" y="50" font-size="20" font-weight="800" fill="#E6EEF8">Trade</text>
     <text x="94" y="74" font-size="14" fill="#93A5BF">UN Comtrade</text>
-    <rect x="22" y="102" width="340" height="28" rx="8" fill="#0a1220"/><text class="mono" x="34" y="121" font-size="14" fill="#34D399">trade_get_bilateral_flows</text>
+    <rect x="22" y="102" width="340" height="28" rx="8" fill="#0a1220"/><text class="mono" x="34" y="121" font-size="14" fill="#4ADE80">trade_get_bilateral_flows</text>
     <text x="22" y="214" font-size="15" font-style="italic" fill="#C3D0E2">“India and US trade flows, all commodities.”</text>
   </g>
   <g transform="translate(856 384)">
     <rect width="384" height="246" rx="18" fill="#111d33" stroke="#223455"/>
-    <path d="M18 0H366" stroke="#2DD4BF" stroke-width="4" stroke-linecap="round"/>
-    <rect x="22" y="26" width="56" height="56" rx="14" fill="#2DD4BF" fill-opacity=".14"/>
-    <g transform="translate(28 32)"><circle cx="22" cy="22" r="14" fill="none" stroke="#2DD4BF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><ellipse cx="22" cy="22" rx="6" ry="14" fill="none" stroke="#2DD4BF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 22H36" fill="none" stroke="#2DD4BF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></g>
+    <path d="M18 0H366" stroke="#38BDF8" stroke-width="4" stroke-linecap="round"/>
+    <rect x="22" y="26" width="56" height="56" rx="14" fill="#38BDF8" fill-opacity=".14"/>
+    <g transform="translate(28 32)"><circle cx="22" cy="22" r="14" fill="none" stroke="#38BDF8" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><ellipse cx="22" cy="22" rx="6" ry="14" fill="none" stroke="#38BDF8" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 22H36" fill="none" stroke="#38BDF8" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></g>
     <text x="94" y="50" font-size="20" font-weight="800" fill="#E6EEF8">Countries</text>
     <text x="94" y="74" font-size="14" fill="#93A5BF">mledoze/countries + World Bank</text>
-    <rect x="22" y="102" width="340" height="28" rx="8" fill="#0a1220"/><text class="mono" x="34" y="121" font-size="14" fill="#2DD4BF">countries_get_profile</text>
-    <rect x="22" y="136" width="340" height="28" rx="8" fill="#0a1220"/><text class="mono" x="34" y="155" font-size="14" fill="#2DD4BF">countries_get_by_region</text>
+    <rect x="22" y="102" width="340" height="28" rx="8" fill="#0a1220"/><text class="mono" x="34" y="121" font-size="14" fill="#38BDF8">countries_get_profile</text>
+    <rect x="22" y="136" width="340" height="28" rx="8" fill="#0a1220"/><text class="mono" x="34" y="155" font-size="14" fill="#38BDF8">countries_get_by_region</text>
     <text x="22" y="214" font-size="15" font-style="italic" fill="#C3D0E2">“Capital, currencies and borders of Kenya.”</text>
   </g>
 </svg>
