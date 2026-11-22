@@ -14,16 +14,19 @@ import { registerCountriesTools } from "./tools/countries.js";
 
 const ICON_PATH = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../assets/icon.png");
 
-const server = new McpServer({ name: "globalpulse-mcp-server", version: "1.0.0" });
-
-registerWorldBankTools(server);
-registerWeatherTools(server);
-registerDisasterTools(server);
-registerAviationTools(server);
-registerTradeTools(server);
-registerCountriesTools(server);
+function createServer(): McpServer {
+  const server = new McpServer({ name: "globalpulse-mcp-server", version: "1.0.0" });
+  registerWorldBankTools(server);
+  registerWeatherTools(server);
+  registerDisasterTools(server);
+  registerAviationTools(server);
+  registerTradeTools(server);
+  registerCountriesTools(server);
+  return server;
+}
 
 async function runStdio(): Promise<void> {
+  const server = createServer();
   const transport = new StdioServerTransport();
   await server.connect(transport);
   console.error("GlobalPulse MCP running on stdio");
@@ -43,10 +46,21 @@ async function runHttp(): Promise<void> {
   app.get("/favicon.ico", serveIcon);
   app.get("/icon.png", serveIcon);
   app.post("/mcp", async (req, res) => {
-    const transport = new StreamableHTTPServerTransport({ sessionIdGenerator: undefined, enableJsonResponse: true });
-    res.on("close", () => transport.close());
-    await server.connect(transport);
-    await transport.handleRequest(req, res, req.body);
+    try {
+      const server = createServer();
+      const transport = new StreamableHTTPServerTransport({ sessionIdGenerator: undefined, enableJsonResponse: true });
+      res.on("close", () => {
+        transport.close().catch(() => {});
+        server.close().catch(() => {});
+      });
+      await server.connect(transport);
+      await transport.handleRequest(req, res, req.body);
+    } catch (err) {
+      console.error("Error handling /mcp request:", err);
+      if (!res.headersSent) {
+        res.status(500).json({ jsonrpc: "2.0", error: { code: -32603, message: "Internal server error" }, id: null });
+      }
+    }
   });
   const port = parseInt(process.env.PORT ?? "3000", 10);
   app.listen(port, () => console.error(`GlobalPulse MCP running on http://localhost:${port}/mcp`));
