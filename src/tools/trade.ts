@@ -26,7 +26,7 @@ interface CTResponse { data?: CTItem[]; }
 
 export function registerTradeTools(server: McpServer): void {
   server.registerTool("globalpulse_trade_get_bilateral_flows", {
-    title: "UN Comtrade — Bilateral Trade Flows",
+    title: "Get Bilateral Trade Flows",
     description: `Bilateral trade data from UN Comtrade. Imports, exports by country pair and HS commodity code.
 Common HS codes: TOTAL (all), "27" (oil/fuel), "84" (machinery), "85" (electronics), "87" (vehicles), "30" (pharma), "10" (cereals).
 Args: reporter, partner (default "world"), year (2000-2023), flow ("all","X","M"), commodity_code, limit, response_format`,
@@ -39,7 +39,7 @@ Args: reporter, partner (default "world"), year (2000-2023), flow ("all","X","M"
       limit: z.number().int().min(1).max(100).default(DEFAULT_LIMIT),
       response_format: z.nativeEnum(ResponseFormat).default(ResponseFormat.MARKDOWN),
     }),
-    annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: true },
+    annotations: { title: "Get Bilateral Trade Flows", readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: true },
   }, async ({ reporter, partner, year, flow, commodity_code, limit, response_format }) => {
     try {
       const params: Record<string, string | number> = {

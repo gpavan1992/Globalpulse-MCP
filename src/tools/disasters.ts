@@ -32,7 +32,7 @@ function parseEvents(raw: GDACSResponse): DisasterEvent[] {
 
 export function registerDisasterTools(server: McpServer): void {
   server.registerTool("globalpulse_disasters_get_active", {
-    title: "GDACS — Active Global Disasters",
+    title: "Get Active Disasters",
     description: `Live disaster alerts from the UN GDACS system. Earthquakes, cyclones, floods, volcanoes, droughts, wildfires.
 Alert levels: Green (watch), Orange (warning), Red (severe).
 Args: event_type ("all","EQ","TC","FL","VO","DR","WF"), alert_level ("all","Green","Orange","Red"), limit, response_format`,
@@ -42,7 +42,7 @@ Args: event_type ("all","EQ","TC","FL","VO","DR","WF"), alert_level ("all","Gree
       limit: z.number().int().min(1).max(100).default(DEFAULT_LIMIT),
       response_format: z.nativeEnum(ResponseFormat).default(ResponseFormat.MARKDOWN),
     }),
-    annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: false, openWorldHint: true },
+    annotations: { title: "Get Active Disasters", readOnlyHint: true, destructiveHint: false, idempotentHint: false, openWorldHint: true },
   }, async ({ event_type, alert_level, limit, response_format }) => {
     try {
       const params: Record<string, string | number> = { limit };
@@ -63,7 +63,7 @@ Args: event_type ("all","EQ","TC","FL","VO","DR","WF"), alert_level ("all","Gree
   });
 
   server.registerTool("globalpulse_disasters_get_by_country", {
-    title: "GDACS — Disaster History by Country",
+    title: "Get Disasters by Country",
     description: `Disaster history for a specific country from UN GDACS.
 Args: country (e.g. "India", "Philippines"), event_type, limit, response_format`,
     inputSchema: z.object({
@@ -72,7 +72,7 @@ Args: country (e.g. "India", "Philippines"), event_type, limit, response_format`
       limit: z.number().int().min(1).max(100).default(DEFAULT_LIMIT),
       response_format: z.nativeEnum(ResponseFormat).default(ResponseFormat.MARKDOWN),
     }),
-    annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: true },
+    annotations: { title: "Get Disasters by Country", readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: true },
   }, async ({ country, event_type, limit, response_format }) => {
     try {
       const params: Record<string, string | number> = { country, limit };

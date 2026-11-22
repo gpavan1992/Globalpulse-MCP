@@ -47,7 +47,7 @@ async function fetchWorldBankData(countryCode: string, indicator: string, startY
 
 export function registerWorldBankTools(server: McpServer): void {
   server.registerTool("globalpulse_worldbank_get_indicator", {
-    title: "World Bank — Get Country Indicator",
+    title: "Get Country Indicator",
     description: `Fetch World Bank macroeconomic indicator data for any country. Covers GDP, inflation, unemployment, trade, debt, population, poverty. 10,000+ indicators from 1960–present.
 
 Common codes: NY.GDP.MKTP.CD (GDP), FP.CPI.TOTL.ZG (inflation), SL.UEM.TOTL.ZS (unemployment), SP.POP.TOTL (population), NE.TRD.GNFS.ZS (trade % GDP).
@@ -65,7 +65,7 @@ Args:
       end_year: z.number().int().min(1960).max(2030).default(new Date().getFullYear()),
       response_format: z.nativeEnum(ResponseFormat).default(ResponseFormat.MARKDOWN),
     }),
-    annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: true },
+    annotations: { title: "Get Country Indicator", readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: true },
   }, async ({ country_code, indicator, start_year, end_year, response_format }) => {
     try {
       const data = await fetchWorldBankData(country_code.toUpperCase(), indicator, start_year, end_year);
@@ -81,10 +81,10 @@ Args:
   });
 
   server.registerTool("globalpulse_worldbank_list_indicators", {
-    title: "World Bank — List Common Indicators",
+    title: "List Common Indicators",
     description: "List the most commonly used World Bank indicator codes. Use this to discover codes before calling globalpulse_worldbank_get_indicator.",
     inputSchema: z.object({ response_format: z.nativeEnum(ResponseFormat).default(ResponseFormat.MARKDOWN) }),
-    annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false },
+    annotations: { title: "List Common Indicators", readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false },
   }, async ({ response_format }) => {
     const output = formatOutput(COMMON_INDICATORS, () => {
       const rows = Object.entries(COMMON_INDICATORS).map(([code, name]) => [`\`${code}\``, name]);

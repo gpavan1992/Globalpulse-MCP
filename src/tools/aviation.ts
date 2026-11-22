@@ -19,7 +19,7 @@ function parseState(sv: OSVector): FlightState {
 
 export function registerAviationTools(server: McpServer): void {
   server.registerTool("globalpulse_aviation_get_live_flights", {
-    title: "OpenSky — Live Flights in Region",
+    title: "Get Live Flights",
     description: `Live ADS-B flight tracking for any geographic bounding box. Real-time position, altitude, speed, heading.
 Args: min_latitude, max_latitude, min_longitude, max_longitude, limit, on_ground_only, response_format
 India box: min_lat=8, max_lat=37, min_lon=68, max_lon=97.5 | Europe: min_lat=36, max_lat=71, min_lon=-10, max_lon=25`,
@@ -32,7 +32,7 @@ India box: min_lat=8, max_lat=37, min_lon=68, max_lon=97.5 | Europe: min_lat=36,
       on_ground_only: z.boolean().default(false),
       response_format: z.nativeEnum(ResponseFormat).default(ResponseFormat.MARKDOWN),
     }),
-    annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: false, openWorldHint: true },
+    annotations: { title: "Get Live Flights", readOnlyHint: true, destructiveHint: false, idempotentHint: false, openWorldHint: true },
   }, async ({ min_latitude, max_latitude, min_longitude, max_longitude, limit, on_ground_only, response_format }) => {
     try {
       const url = buildUrl(`${API_ENDPOINTS.OPENSKY}/states/all`, { lamin: min_latitude, lamax: max_latitude, lomin: min_longitude, lomax: max_longitude });
@@ -53,14 +53,14 @@ India box: min_lat=8, max_lat=37, min_lon=68, max_lon=97.5 | Europe: min_lat=36,
   });
 
   server.registerTool("globalpulse_aviation_get_flights_by_country", {
-    title: "OpenSky — Live Flights by Country",
+    title: "Get Flights by Country",
     description: `All live airborne flights from a specific country. Args: country (e.g. "India", "Germany", "United States"), limit, response_format`,
     inputSchema: z.object({
       country: z.string().min(2),
       limit: z.number().int().min(1).max(100).default(DEFAULT_LIMIT),
       response_format: z.nativeEnum(ResponseFormat).default(ResponseFormat.MARKDOWN),
     }),
-    annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: false, openWorldHint: true },
+    annotations: { title: "Get Flights by Country", readOnlyHint: true, destructiveHint: false, idempotentHint: false, openWorldHint: true },
   }, async ({ country, limit, response_format }) => {
     try {
       const data = await fetchJson<OSResponse>(`${API_ENDPOINTS.OPENSKY}/states/all`);

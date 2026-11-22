@@ -20,7 +20,7 @@ function mmToIn(mm: number | null): string {
 
 export function registerWeatherTools(server: McpServer): void {
   server.registerTool("globalpulse_weather_get_forecast", {
-    title: "Open-Meteo — 7-Day Weather Forecast",
+    title: "Get Weather Forecast",
     description: `7-day daily weather forecast for any location. No API key, no rate limit.
 Args: latitude, longitude, timezone (IANA e.g. "Asia/Kolkata"), response_format
 Examples: Mumbai → lat=19.076, lon=72.877, tz="Asia/Kolkata" | London → lat=51.507, lon=-0.127, tz="Europe/London"`,
@@ -30,7 +30,7 @@ Examples: Mumbai → lat=19.076, lon=72.877, tz="Asia/Kolkata" | London → lat=
       timezone: z.string().default("UTC"),
       response_format: z.nativeEnum(ResponseFormat).default(ResponseFormat.MARKDOWN),
     }),
-    annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: true },
+    annotations: { title: "Get Weather Forecast", readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: true },
   }, async ({ latitude, longitude, timezone, response_format }) => {
     try {
       const url = buildUrl(`${API_ENDPOINTS.OPEN_METEO}/forecast`, {
@@ -58,7 +58,7 @@ Examples: Mumbai → lat=19.076, lon=72.877, tz="Asia/Kolkata" | London → lat=
   });
 
   server.registerTool("globalpulse_weather_get_historical", {
-    title: "Open-Meteo — Historical Climate (ERA5, back to 1940)",
+    title: "Get Historical Weather",
     description: `Historical daily climate data for any location, back to 1940 using ERA5 reanalysis. No API key.
 Args: latitude, longitude, start_date (YYYY-MM-DD), end_date (YYYY-MM-DD), timezone, response_format`,
     inputSchema: z.object({
@@ -69,7 +69,7 @@ Args: latitude, longitude, start_date (YYYY-MM-DD), end_date (YYYY-MM-DD), timez
       timezone: z.string().default("UTC"),
       response_format: z.nativeEnum(ResponseFormat).default(ResponseFormat.MARKDOWN),
     }),
-    annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: true },
+    annotations: { title: "Get Historical Weather", readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: true },
   }, async ({ latitude, longitude, start_date, end_date, timezone, response_format }) => {
     try {
       const url = buildUrl(`${API_ENDPOINTS.OPEN_METEO_ARCHIVE}/archive`, {

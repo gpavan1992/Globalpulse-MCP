@@ -28,14 +28,14 @@ function parse(raw: RawCountry): CountryInfo {
 
 export function registerCountriesTools(server: McpServer): void {
   server.registerTool("globalpulse_countries_get_profile", {
-    title: "REST Countries — Country Profile",
+    title: "Get Country Profile",
     description: `Full country profile: capital, region, population, area, currencies, languages, timezones, borders. No API key, no rate limit.
 Args: country (name, ISO alpha-2 e.g. "IN", or alpha-3 e.g. "IND"), response_format`,
     inputSchema: z.object({
       country: z.string().min(2),
       response_format: z.nativeEnum(ResponseFormat).default(ResponseFormat.MARKDOWN),
     }),
-    annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: true },
+    annotations: { title: "Get Country Profile", readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: true },
   }, async ({ country, response_format }) => {
     try {
       const isCode = country.length <= 3;
@@ -56,7 +56,7 @@ Args: country (name, ISO alpha-2 e.g. "IN", or alpha-3 e.g. "IND"), response_for
   });
 
   server.registerTool("globalpulse_countries_get_by_region", {
-    title: "REST Countries — Countries by Region",
+    title: "Get Countries by Region",
     description: `List all countries in a region with population, area, capital, currencies.
 Regions: "Africa", "Americas", "Asia", "Europe", "Oceania". Subregions: "South Asia", "Southeast Asia", "Eastern Europe", etc.
 Args: region, sort_by ("population","area","name"), limit, response_format`,
@@ -66,7 +66,7 @@ Args: region, sort_by ("population","area","name"), limit, response_format`,
       limit: z.number().int().min(1).max(100).default(20),
       response_format: z.nativeEnum(ResponseFormat).default(ResponseFormat.MARKDOWN),
     }),
-    annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: true },
+    annotations: { title: "Get Countries by Region", readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: true },
   }, async ({ region, sort_by, limit, response_format }) => {
     try {
       let rawList: RawCountry[] = [];
