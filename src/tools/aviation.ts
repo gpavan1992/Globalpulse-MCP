@@ -15,7 +15,7 @@ export function registerAviationTools(server: McpServer): void {
   server.registerTool("globalpulse_aviation_get_live_flights", {
     title: "Get Live Flights",
     description: `Live ADS-B flight tracking for a geographic bounding box. Real-time position, altitude, speed, heading, registration and aircraft type.
-Data: adsb.lol (primary), adsb.fi (fallback). The box is converted to a centre point + radius; boxes wider than ${MAX_RADIUS_NM} nm are split into several circles (one upstream request each, at most ${MAX_TILES}). Results are cached for 60 s per area, so repeat calls cost no upstream requests. Prefer small boxes — a whole-country box can use ~25 requests of a shared daily quota.
+Data: adsb.lol (primary), adsb.fi (fallback). The box is converted to a centre point + radius; boxes wider than ${MAX_RADIUS_NM} nm are split into several circles (one upstream request each, at most ${MAX_TILES}). Results are cached for 60 s per area, so repeat calls cost no upstream requests. A whole-country box can use ~25 requests of a shared daily quota.
 Args: min_latitude, max_latitude, min_longitude, max_longitude (min must be <= max; boxes crossing the antimeridian are not supported), limit, on_ground_only, response_format
 Examples: Delhi area: min_lat=26.5, max_lat=30.5, min_lon=75, max_lon=79 | Germany: min_lat=47, max_lat=55.1, min_lon=5.8, max_lon=15.1`,
     inputSchema: z.object({

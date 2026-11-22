@@ -163,8 +163,12 @@ PRs welcome — especially for Priority 2 tools. Open an issue to claim a tool b
 
 No accounts, and the server stores no user data. See [PRIVACY.md](PRIVACY.md) for what is forwarded to third-party data providers and what hosting logs may contain.
 
+## Terms
+
+Use of the public server is subject to [TERMS.md](TERMS.md).
+
 ---
 
 ## License
 
-MIT — built by [Pavan Kumar Galiveeti](https://www.linkedin.com/in/pavan-kumar-galiveeti-a44335192/)
+MIT — see [LICENSE](LICENSE). Built by [Pavan Kumar Galiveeti](https://www.linkedin.com/in/pavan-kumar-galiveeti-a44335192/)

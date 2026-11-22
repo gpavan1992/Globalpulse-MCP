@@ -82,7 +82,7 @@ Args:
 
   server.registerTool("globalpulse_worldbank_list_indicators", {
     title: "List Common Indicators",
-    description: "List the most commonly used World Bank indicator codes. Use this to discover codes before calling globalpulse_worldbank_get_indicator.",
+    description: "List the most commonly used World Bank indicator codes.",
     inputSchema: z.object({ response_format: z.nativeEnum(ResponseFormat).default(ResponseFormat.MARKDOWN) }),
     annotations: { title: "List Common Indicators", readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false },
   }, async ({ response_format }) => {
