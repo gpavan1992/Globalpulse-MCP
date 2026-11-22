@@ -25,8 +25,6 @@ Nothing returned by the Service is financial, investment, trade, legal, medical,
 
 ## 5. Third-party sources and their terms
 
-The public Global Pulse service uses adsb.lol as its aviation data provider.
-
 Global Pulse retrieves publicly available information from independent third-party data providers, including World Bank Open Data, Open-Meteo, UN GDACS, UN Comtrade, mledoze/countries (ODbL 1.0), and adsb.lol (ODbL 1.0).
 
 The public Global Pulse service uses adsb.lol as its aviation data provider. The optional adsb.fi fallback is disabled on the public deployment. It may be enabled only in separately configured self-hosted deployments, subject to the applicable provider's terms and permissions.
