@@ -1,4 +1,6 @@
-<h1 align="center">🌐 GlobalPulse MCP</h1>
+<p align="center">
+  <img src="assets/readme/hero.svg" alt="GlobalPulse MCP. Live public data for your AI assistant: 11 read-only tools, no key, no account. A Mumbai 7-day maximum temperature line is drawn from Open-Meteo data while three safeguards appear: country codes mapped, approximate results marked, data year shown." width="100%">
+</p>
 
 <p align="center">
   <a href="https://registry.modelcontextprotocol.io/v0.1/servers?search=io.github.gpavan1992/globalpulse-mcp"><img src="https://img.shields.io/badge/MCP_Registry-active-38BDF8?style=flat" alt="MCP Registry" height="20"></a>
@@ -43,6 +45,13 @@
 
 Public data APIs fail quietly. While building GlobalPulse against live sources, each of these came up, and each one could have produced a plausible-looking answer:
 
+<p align="center">
+  <img src="assets/readme/traps.svg" alt="Five things that looked right. Comtrade needs M49 codes, so India is mapped to 699, not ISO 356. The REST Countries API went offline, so a static cached list plus World Bank population is used. Flights by country are marked approximate with hub sampling. Upstream timeouts are retried once and then return a clear error. World Bank values show their data year." width="100%">
+</p>
+
+<details>
+<summary><b>The same five, as a table</b></summary>
+
 | What went wrong | What GlobalPulse does |
 |---|---|
 | UN Comtrade expects M49 country codes, not ISO. India is `699`, not `356` | Maps country names and ISO codes to M49 before calling |
@@ -50,6 +59,8 @@ Public data APIs fail quietly. While building GlobalPulse against live sources, 
 | ADS-B sources have no "flights by country" query | The tool says its count is **approximate**, samples major hubs and flags partial coverage |
 | Upstream APIs time out or return an error page | Retries once, caps the wait, and returns a clear error instead of a made-up number |
 | World Bank indicators lag by 1–2 years | The data year is always shown next to the value |
+
+</details>
 
 The rule is the same everywhere: **retry, flag or refuse. Never guess.**
 
@@ -69,26 +80,40 @@ No account, no login, no API key. The server is read-only and stateless: each re
 
 ## See it work
 
-**ChatGPT.** One prompt asks for an "India Morning Intelligence Brief" built from live GlobalPulse tool calls: GDP and inflation, a Mumbai 7-day forecast, disaster alerts, a country profile, and a table showing which tool returned each dataset.
+One prompt in ChatGPT asks for an "India Morning Intelligence Brief". ChatGPT calls GlobalPulse tools for World Bank figures, a Mumbai 7-day forecast, disaster alerts and a country profile, then shows which tool returned each dataset.
 
-▶️ **[Watch the ChatGPT demo (1 min)](https://vimeo.com/1249076180)**
-
-<!-- Add screenshots to screenshots/ and uncomment:
 <p align="center">
-  <img src="screenshots/chatgpt-india-brief.png" alt="ChatGPT building an India Morning Intelligence Brief from live GlobalPulse tool calls" width="100%">
+  <a href="https://vimeo.com/1249076180"><img src="assets/demo/poster.png" alt="Play the 1-minute GlobalPulse demo in ChatGPT: a live India briefing built from GlobalPulse tool calls" width="100%"></a>
 </p>
--->
 
-**Claude.** The same server works in Claude as a custom connector.
+▶️ **[Watch the full ChatGPT demo (1 min)](https://vimeo.com/1249076180)**
 
-<!-- TODO: add the Claude demo, then replace this comment with the link or image:
+Three moments from it:
+
+<p align="center">
+  <img src="assets/demo/ask-live-briefing.gif" alt="You ask ChatGPT for an India briefing and tell it to use the connected GlobalPulse tools instead of general knowledge. ChatGPT then calls the World Bank, weather, disaster and country tools." width="100%">
+</p>
+
+<p align="center">
+  <img src="assets/demo/brief-from-live-data.gif" alt="The briefing fills in from live data: a table of Mumbai's 7-day forecast and a chart of daily maximum and minimum temperatures from Open-Meteo." width="100%">
+</p>
+
+<details>
+<summary><b>One more: every dataset is traceable</b></summary>
+
+<p align="center">
+  <img src="assets/demo/every-dataset-traceable.gif" alt="A provenance table maps each section of the briefing to the GlobalPulse tool that returned it, such as worldbank_get_indicator and weather_get_forecast, and flags caveats like annual figures that are not real-time." width="100%">
+</p>
+
+</details>
+
+*Recorded on 22 Nov 2026 with unedited tool output. Indicators, weather and alerts are live public data.*
+
+**Claude.** The same server works in Claude as a custom connector (see [Quick start](#quick-start)).
+
+<!-- TODO: add a fresh Claude demo here when recorded:
 ▶️ **[Watch the Claude demo](PASTE_LINK_HERE)**
-<p align="center">
-  <img src="screenshots/claude-india-brief.png" alt="Claude answering with live GlobalPulse tool calls" width="100%">
-</p>
 -->
-
-*Prices, weather and indicators in the demos are live public data.*
 
 ## Quick start
 
@@ -147,6 +172,10 @@ Edit `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS) o
 
 ## The eleven tools
 
+<p align="center">
+  <img src="assets/readme/tools.svg" alt="Eleven tools in six areas. Macroeconomics from the World Bank: worldbank_get_indicator and worldbank_list_indicators. Climate and weather from Open-Meteo: weather_get_forecast and weather_get_historical. Disasters from UN GDACS: disasters_get_active and disasters_get_by_country. Aviation from adsb.lol, approximate by country: aviation_get_live_flights and aviation_get_flights_by_country. Trade from UN Comtrade: trade_get_bilateral_flows. Countries from mledoze/countries and the World Bank: countries_get_profile and countries_get_by_region." width="100%">
+</p>
+
 ### 🏦 Macroeconomics: World Bank Open Data
 
 | Tool | What it does |
@@ -191,6 +220,10 @@ Edit `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS) o
 All tools accept `response_format: "markdown"` (default) or `"json"` for agent pipelines.
 
 ## How a number gets checked
+
+<p align="center">
+  <img src="assets/readme/how.svg" alt="How a number gets checked, in five steps. You ask. Names and ISO codes are resolved and the data is fetched from one named public source. A timeout is retried once with a capped wait. Approximate results and coverage gaps are labelled. The answer shows the value, its source and its data year." width="100%">
+</p>
 
 1. **Resolve the input.** Country names and ISO codes are mapped to what each source expects (for example M49 for UN Comtrade).
 2. **Fetch from the primary source.** Each tool calls one named public provider. There is no scraped or paid data.
@@ -264,11 +297,15 @@ Globalpulse-MCP/
 │   ├── types.ts
 │   ├── services/              # API clients (adsb.lol, World Bank, Comtrade, ...)
 │   └── tools/                 # one module per tool area
-├── assets/                    # icon
+├── assets/                    # icon; readme/ diagrams; demo/ GIFs and video poster
+├── .github/                   # issue and pull request templates
 ├── server.json                # MCP Registry manifest
 ├── package.json
 ├── PRIVACY.md
 ├── TERMS.md
+├── SECURITY.md
+├── CONTRIBUTING.md
+├── CHANGELOG.md
 ├── ROADMAP.md
 └── LICENSE
 ```
@@ -277,7 +314,7 @@ Globalpulse-MCP/
 
 ## Contributing
 
-PRs are welcome, especially for Priority 2 tools. Open an issue to claim a tool before starting. The most useful report is a **data trap**: a result that looked right and was not.
+See [CONTRIBUTING.md](CONTRIBUTING.md). Report vulnerabilities privately as described in [SECURITY.md](SECURITY.md). PRs are welcome, especially for Priority 2 tools. Open an issue to claim a tool before starting. The most useful report is a **data trap**: a result that looked right and was not.
 
 ```bash
 npm install

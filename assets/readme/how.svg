@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 420" width="1280" height="420" role="img" aria-labelledby="t d">
+  <title id="t">How a number gets checked</title>
+  <desc id="d">How GlobalPulse answers a question in five steps. You ask about Mumbai's weather and India's GDP. Names and country codes are resolved and the data is fetched from one named public source. A timeout is retried once with a capped wait. Approximate results and coverage gaps are labelled. The answer shows the value, its source and its data year. The server is read-only, needs no account or key, and reads six public sources.</desc>
+  <style>
+    text{font-family:Inter,"Segoe UI",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}
+    .mono{font-family:"JetBrains Mono","SFMono-Regular",Menlo,Consolas,"DejaVu Sans Mono",monospace}
+    .pk{animation:pk 10s ease-in-out infinite}@keyframes pk{0%{transform:translateX(0);opacity:0}4%{opacity:1}4.0%{transform:translateX(0px)}13.0%{transform:translateX(0px)}22.0%{transform:translateX(246px)}31.0%{transform:translateX(246px)}40.0%{transform:translateX(492px)}49.0%{transform:translateX(492px)}58.0%{transform:translateX(738px)}67.0%{transform:translateX(738px)}76.0%{transform:translateX(984px)}94%{opacity:1}100%{transform:translateX(984px);opacity:0}}.n0 .hl{animation:n0 10s ease-in-out infinite}@keyframes n0{0%,3.0%{opacity:0}6.0%,15.0%{opacity:1}19.0%,100%{opacity:0}}.n1 .hl{animation:n1 10s ease-in-out infinite}@keyframes n1{0%,21.0%{opacity:0}24.0%,33.0%{opacity:1}37.0%,100%{opacity:0}}.n2 .hl{animation:n2 10s ease-in-out infinite}@keyframes n2{0%,39.0%{opacity:0}42.0%,51.0%{opacity:1}55.0%,100%{opacity:0}}.n3 .hl{animation:n3 10s ease-in-out infinite}@keyframes n3{0%,57.0%{opacity:0}60.0%,69.0%{opacity:1}73.0%,100%{opacity:0}}.n4 .hl{animation:n4 10s ease-in-out infinite}@keyframes n4{0%,75.0%{opacity:0}78.0%,87.0%{opacity:1}91.0%,100%{opacity:0}}@media (prefers-reduced-motion:reduce){.hl,.pk{animation:none!important}.pk{opacity:0}}
+  </style>
+  <rect width="1280" height="420" rx="24" fill="#0d1b33"/>
+  <text x="40" y="58" font-size="28" font-weight="800" fill="#E6EEF8">How a number gets checked</text>
+  <text x="40" y="88" font-size="17" fill="#93A5BF">Retry, flag or refuse. Never guess.</text>
+  <g class="n0" transform="translate(40 112)">
+    <rect width="216" height="170" rx="16" fill="#111d33" stroke="#223455"/>
+    <rect class="hl" width="216" height="170" rx="16" fill="#C9D6E8" fill-opacity=".07" stroke="#C9D6E8" stroke-width="2" opacity="0"/>
+    <circle cx="30" cy="34" r="14" fill="#C9D6E8" fill-opacity=".2"/><text x="30" y="39.5" text-anchor="middle" font-size="14" font-weight="800" fill="#C9D6E8">1</text>
+    <text x="54" y="40" font-size="18" font-weight="800" fill="#E6EEF8">You ask</text>
+    <text x="18" y="82" font-size="15" fill="#C3D0E2">“What's the weather in</text>
+    <text x="18" y="106" font-size="15" fill="#C3D0E2">Mumbai this week, and</text>
+    <text x="18" y="130" font-size="15" fill="#C3D0E2">India's GDP?”</text>
+  </g>
+  <path d="M260 197 H282" stroke="#4A5C78" stroke-width="2"/><path d="M278 191 L285 197 L278 203" fill="none" stroke="#4A5C78" stroke-width="2"/>
+  <g class="n1" transform="translate(286 112)">
+    <rect width="216" height="170" rx="16" fill="#111d33" stroke="#223455"/>
+    <rect class="hl" width="216" height="170" rx="16" fill="#38BDF8" fill-opacity=".07" stroke="#38BDF8" stroke-width="2" opacity="0"/>
+    <circle cx="30" cy="34" r="14" fill="#38BDF8" fill-opacity=".2"/><text x="30" y="39.5" text-anchor="middle" font-size="14" font-weight="800" fill="#38BDF8">2</text>
+    <text x="54" y="40" font-size="18" font-weight="800" fill="#E6EEF8">Resolve, fetch</text>
+    <text x="18" y="82" font-size="15" fill="#C3D0E2">Names and ISO codes are</text>
+    <text x="18" y="106" font-size="15" fill="#C3D0E2">mapped to what each</text>
+    <text x="18" y="130" font-size="15" fill="#C3D0E2">source expects, such as</text>
+    <text x="18" y="154" font-size="15" fill="#C3D0E2">M49 for UN Comtrade.</text>
+  </g>
+  <path d="M506 197 H528" stroke="#4A5C78" stroke-width="2"/><path d="M524 191 L531 197 L524 203" fill="none" stroke="#4A5C78" stroke-width="2"/>
+  <g class="n2" transform="translate(532 112)">
+    <rect width="216" height="170" rx="16" fill="#111d33" stroke="#223455"/>
+    <rect class="hl" width="216" height="170" rx="16" fill="#FBBF24" fill-opacity=".07" stroke="#FBBF24" stroke-width="2" opacity="0"/>
+    <circle cx="30" cy="34" r="14" fill="#FBBF24" fill-opacity=".2"/><text x="30" y="39.5" text-anchor="middle" font-size="14" font-weight="800" fill="#FBBF24">3</text>
+    <text x="54" y="40" font-size="18" font-weight="800" fill="#E6EEF8">Retry once</text>
+    <text x="18" y="82" font-size="15" fill="#C3D0E2">One named public source</text>
+    <text x="18" y="106" font-size="15" fill="#C3D0E2">per tool. A timeout is</text>
+    <text x="18" y="130" font-size="15" fill="#C3D0E2">retried once, with a</text>
+    <text x="18" y="154" font-size="15" fill="#C3D0E2">capped wait.</text>
+  </g>
+  <path d="M752 197 H774" stroke="#4A5C78" stroke-width="2"/><path d="M770 191 L777 197 L770 203" fill="none" stroke="#4A5C78" stroke-width="2"/>
+  <g class="n3" transform="translate(778 112)">
+    <rect width="216" height="170" rx="16" fill="#111d33" stroke="#223455"/>
+    <rect class="hl" width="216" height="170" rx="16" fill="#A78BFA" fill-opacity=".07" stroke="#A78BFA" stroke-width="2" opacity="0"/>
+    <circle cx="30" cy="34" r="14" fill="#A78BFA" fill-opacity=".2"/><text x="30" y="39.5" text-anchor="middle" font-size="14" font-weight="800" fill="#A78BFA">4</text>
+    <text x="54" y="40" font-size="18" font-weight="800" fill="#E6EEF8">Label limits</text>
+    <text x="18" y="82" font-size="15" fill="#C3D0E2">Approximate results are</text>
+    <text x="18" y="106" font-size="15" fill="#C3D0E2">marked. Coverage gaps</text>
+    <text x="18" y="130" font-size="15" fill="#C3D0E2">are named, not hidden.</text>
+  </g>
+  <path d="M998 197 H1020" stroke="#4A5C78" stroke-width="2"/><path d="M1016 191 L1023 197 L1016 203" fill="none" stroke="#4A5C78" stroke-width="2"/>
+  <g class="n4" transform="translate(1024 112)">
+    <rect width="216" height="170" rx="16" fill="#111d33" stroke="#223455"/>
+    <rect class="hl" width="216" height="170" rx="16" fill="#34D399" fill-opacity=".07" stroke="#34D399" stroke-width="2" opacity="0"/>
+    <circle cx="30" cy="34" r="14" fill="#34D399" fill-opacity=".2"/><text x="30" y="39.5" text-anchor="middle" font-size="14" font-weight="800" fill="#34D399">5</text>
+    <text x="54" y="40" font-size="18" font-weight="800" fill="#E6EEF8">Show source</text>
+    <text x="18" y="82" font-size="15" fill="#C3D0E2">Value, source and data</text>
+    <text x="18" y="106" font-size="15" fill="#C3D0E2">year. Flights carry the</text>
+    <text x="18" y="130" font-size="15" fill="#C3D0E2">adsb.lol ODbL credit.</text>
+  </g>
+  <g class="pk" transform="translate(40 0)"><circle cx="0" cy="290" r="7" fill="#38BDF8"/></g>
+  <g transform="translate(40 310)">
+    <rect width="760" height="78" rx="14" fill="#0b1527" stroke="#223455"/>
+    <text x="22" y="30" font-size="14" font-weight="700" fill="#38BDF8">READS (PUBLIC, READ-ONLY)</text>
+    <text x="22" y="56" font-size="15" fill="#C3D0E2">World Bank · Open-Meteo · UN GDACS · UN Comtrade · adsb.lol · mledoze/countries</text>
+  </g>
+  <g transform="translate(820 310)">
+    <rect width="420" height="78" rx="14" fill="#0b1527" stroke="#223455"/>
+    <text x="22" y="30" font-size="14" font-weight="700" fill="#34D399">NOTHING TO SET UP</text>
+    <text x="22" y="56" font-size="15" fill="#C3D0E2">No account. No API key. Stateless and read-only.</text>
+  </g>
+</svg>

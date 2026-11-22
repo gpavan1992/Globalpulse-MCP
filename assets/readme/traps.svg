@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 540" width="1280" height="540" role="img" aria-labelledby="t d">
+  <title id="t">Five things that looked right</title>
+  <desc id="d">Five problems found while building GlobalPulse against live public sources, and what the server does about each. Comtrade needs M49 codes, so India is mapped to 699 instead of ISO 356. The REST Countries API went offline, so a static cached list plus World Bank population is used. Flights by country are marked approximate with hub sampling. Upstream timeouts are retried once and then return a clear error. World Bank values show their data year.</desc>
+  <style>
+    text{font-family:Inter,"Segoe UI",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}
+    .mono{font-family:"JetBrains Mono","SFMono-Regular",Menlo,Consolas,"DejaVu Sans Mono",monospace}
+    .bad{opacity:.5}.strike{stroke-dasharray:1;stroke-dashoffset:0}.r0 .bad{animation:b0 12s linear infinite}@keyframes b0{0%,5.0%{opacity:0}7.5%,12.5%{opacity:1}15.8%,92%{opacity:.5}98%,100%{opacity:0}}.r0 .strike{animation:s0 12s linear infinite}@keyframes s0{0%,10.0%{stroke-dashoffset:1;opacity:1}13.3%,92%{stroke-dashoffset:0;opacity:1}98%,100%{stroke-dashoffset:0;opacity:0}}.r0 .good{animation:g0 12s ease-out infinite}@keyframes g0{0%,13.3%{opacity:0;transform:translateX(-10px)}16.7%,92%{opacity:1;transform:translateX(0)}98%,100%{opacity:0}}.r1 .bad{animation:b1 12s linear infinite}@keyframes b1{0%,22.0%{opacity:0}24.5%,29.5%{opacity:1}32.8%,92%{opacity:.5}98%,100%{opacity:0}}.r1 .strike{animation:s1 12s linear infinite}@keyframes s1{0%,27.0%{stroke-dashoffset:1;opacity:1}30.3%,92%{stroke-dashoffset:0;opacity:1}98%,100%{stroke-dashoffset:0;opacity:0}}.r1 .good{animation:g1 12s ease-out infinite}@keyframes g1{0%,30.3%{opacity:0;transform:translateX(-10px)}33.7%,92%{opacity:1;transform:translateX(0)}98%,100%{opacity:0}}.r2 .bad{animation:b2 12s linear infinite}@keyframes b2{0%,39.0%{opacity:0}41.5%,46.5%{opacity:1}49.8%,92%{opacity:.5}98%,100%{opacity:0}}.r2 .strike{animation:s2 12s linear infinite}@keyframes s2{0%,44.0%{stroke-dashoffset:1;opacity:1}47.3%,92%{stroke-dashoffset:0;opacity:1}98%,100%{stroke-dashoffset:0;opacity:0}}.r2 .good{animation:g2 12s ease-out infinite}@keyframes g2{0%,47.3%{opacity:0;transform:translateX(-10px)}50.7%,92%{opacity:1;transform:translateX(0)}98%,100%{opacity:0}}.r3 .bad{animation:b3 12s linear infinite}@keyframes b3{0%,56.0%{opacity:0}58.5%,63.5%{opacity:1}66.8%,92%{opacity:.5}98%,100%{opacity:0}}.r3 .strike{animation:s3 12s linear infinite}@keyframes s3{0%,61.0%{stroke-dashoffset:1;opacity:1}64.3%,92%{stroke-dashoffset:0;opacity:1}98%,100%{stroke-dashoffset:0;opacity:0}}.r3 .good{animation:g3 12s ease-out infinite}@keyframes g3{0%,64.3%{opacity:0;transform:translateX(-10px)}67.7%,92%{opacity:1;transform:translateX(0)}98%,100%{opacity:0}}.r4 .bad{animation:b4 12s linear infinite}@keyframes b4{0%,73.0%{opacity:0}75.5%,80.5%{opacity:1}83.8%,92%{opacity:.5}98%,100%{opacity:0}}.r4 .strike{animation:s4 12s linear infinite}@keyframes s4{0%,78.0%{stroke-dashoffset:1;opacity:1}81.3%,92%{stroke-dashoffset:0;opacity:1}98%,100%{stroke-dashoffset:0;opacity:0}}.r4 .good{animation:g4 12s ease-out infinite}@keyframes g4{0%,81.3%{opacity:0;transform:translateX(-10px)}84.7%,92%{opacity:1;transform:translateX(0)}98%,100%{opacity:0}}@media (prefers-reduced-motion:reduce){.bad,.strike,.good{animation:none!important}.strike{stroke-dashoffset:0}}
+  </style>
+  <rect width="1280" height="540" rx="24" fill="#0a1426"/>
+  <text x="40" y="58" font-size="28" font-weight="800" fill="#E6EEF8">Five things that looked right</text>
+  <text x="40" y="88" font-size="17" fill="#93A5BF">Each came up while building against live sources. Each could have produced a plausible answer.</text>
+  <text x="40" y="136" font-size="13" font-weight="700" fill="#93A5BF" letter-spacing="1.5">WHAT WENT WRONG</text>
+  <text x="440" y="136" font-size="13" font-weight="700" fill="#93A5BF" letter-spacing="1.5">THE NAIVE RESULT</text>
+  <text x="840" y="136" font-size="13" font-weight="700" fill="#38BDF8" letter-spacing="1.5">GLOBALPULSE</text>
+  <g class="r0" transform="translate(40 152)">
+    <rect width="1200" height="56" rx="12" fill="#111d33" stroke="#223455"/>
+    <text x="20" y="34" font-size="17" font-weight="700" fill="#E6EEF8">Comtrade country code</text>
+    <g class="bad"><text x="400" y="34" font-size="16" fill="#F5B8B8">India queried as ISO 356</text><path class="strike" pathLength="1" d="M398 29 H585" stroke="#F87171" stroke-width="2"/></g>
+    <g class="good"><rect x="792" y="12" width="388" height="32" rx="16" fill="#0e2f27" stroke="#34D399" stroke-opacity=".55"/><text x="810" y="34" font-size="15" font-weight="600" fill="#A7F0D4">✓ M49 699 used for India</text></g>
+  </g>
+  <g class="r1" transform="translate(40 220)">
+    <rect width="1200" height="56" rx="12" fill="#111d33" stroke="#223455"/>
+    <text x="20" y="34" font-size="17" font-weight="700" fill="#E6EEF8">Country data source</text>
+    <g class="bad"><text x="400" y="34" font-size="16" fill="#F5B8B8">REST Countries API went offline</text><path class="strike" pathLength="1" d="M398 29 H639" stroke="#F87171" stroke-width="2"/></g>
+    <g class="good"><rect x="792" y="12" width="388" height="32" rx="16" fill="#0e2f27" stroke="#34D399" stroke-opacity=".55"/><text x="810" y="34" font-size="15" font-weight="600" fill="#A7F0D4">✓ Static cached list + World Bank</text></g>
+  </g>
+  <g class="r2" transform="translate(40 288)">
+    <rect width="1200" height="56" rx="12" fill="#111d33" stroke="#223455"/>
+    <text x="20" y="34" font-size="17" font-weight="700" fill="#E6EEF8">Flights by country</text>
+    <g class="bad"><text x="400" y="34" font-size="16" fill="#F5B8B8">Looks like a national total</text><path class="strike" pathLength="1" d="M398 29 H608" stroke="#F87171" stroke-width="2"/></g>
+    <g class="good"><rect x="792" y="12" width="388" height="32" rx="16" fill="#0e2f27" stroke="#34D399" stroke-opacity=".55"/><text x="810" y="34" font-size="15" font-weight="600" fill="#A7F0D4">✓ Marked approximate, hubs sampled</text></g>
+  </g>
+  <g class="r3" transform="translate(40 356)">
+    <rect width="1200" height="56" rx="12" fill="#111d33" stroke="#223455"/>
+    <text x="20" y="34" font-size="17" font-weight="700" fill="#E6EEF8">Upstream timeouts</text>
+    <g class="bad"><text x="400" y="34" font-size="16" fill="#F5B8B8">Error page can pass for data</text><path class="strike" pathLength="1" d="M398 29 H616" stroke="#F87171" stroke-width="2"/></g>
+    <g class="good"><rect x="792" y="12" width="388" height="32" rx="16" fill="#0e2f27" stroke="#34D399" stroke-opacity=".55"/><text x="810" y="34" font-size="15" font-weight="600" fill="#A7F0D4">✓ Retry once, then a clear error</text></g>
+  </g>
+  <g class="r4" transform="translate(40 424)">
+    <rect width="1200" height="56" rx="12" fill="#111d33" stroke="#223455"/>
+    <text x="20" y="34" font-size="17" font-weight="700" fill="#E6EEF8">World Bank lag</text>
+    <g class="bad"><text x="400" y="34" font-size="16" fill="#F5B8B8">A value with no date</text><path class="strike" pathLength="1" d="M398 29 H554" stroke="#F87171" stroke-width="2"/></g>
+    <g class="good"><rect x="792" y="12" width="388" height="32" rx="16" fill="#0e2f27" stroke="#34D399" stroke-opacity=".55"/><text x="810" y="34" font-size="15" font-weight="600" fill="#A7F0D4">✓ Data year beside the value</text></g>
+  </g>
+  <text x="40" y="508" font-size="16" font-weight="700" fill="#E6EEF8">The rule is the same everywhere: <tspan fill="#38BDF8">retry, flag or refuse. Never guess.</tspan></text>
+</svg>

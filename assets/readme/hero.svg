@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 420" width="1280" height="420" role="img" aria-labelledby="t d">
+  <title id="t">GlobalPulse MCP</title>
+  <desc id="d">GlobalPulse MCP: live public data for your AI assistant. Eleven read-only tools for macroeconomics, weather, disasters, trade, flights and country data, with no API key and no account. A Mumbai 7-day maximum temperature line is drawn from Open-Meteo data while three safeguards appear: country codes are mapped, approximate results are marked, and the data year is shown.</desc>
+  <style>
+    text{font-family:Inter,"Segoe UI",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}
+    .mono{font-family:"JetBrains Mono","SFMono-Regular",Menlo,Consolas,"DejaVu Sans Mono",monospace}
+    .line{stroke-dasharray:1;stroke-dashoffset:0;animation:draw 10s ease-in-out infinite}
+    .c1{animation:c1 10s ease-out infinite}.c2{animation:c2 10s ease-out infinite}.c3{animation:c3 10s ease-out infinite}
+    .dot{animation:dot 10s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+    @keyframes draw{0%{stroke-dashoffset:1}32%,92%{stroke-dashoffset:0;opacity:1}98%,100%{stroke-dashoffset:0;opacity:0}}
+    @keyframes dot{0%,30%{opacity:0;transform:scale(.4)}34%,92%{opacity:1;transform:scale(1)}98%,100%{opacity:0}}
+    @keyframes c1{0%,36%{opacity:0;transform:translateY(8px)}40%,92%{opacity:1;transform:translateY(0)}98%,100%{opacity:0}}
+    @keyframes c2{0%,48%{opacity:0;transform:translateY(8px)}52%,92%{opacity:1;transform:translateY(0)}98%,100%{opacity:0}}
+    @keyframes c3{0%,60%{opacity:0;transform:translateY(8px)}64%,92%{opacity:1;transform:translateY(0)}98%,100%{opacity:0}}
+    @media (prefers-reduced-motion:reduce){.line,.c1,.c2,.c3,.dot{animation:none}}
+  </style>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0d1b33"/><stop offset="1" stop-color="#0a1426"/></linearGradient>
+    <linearGradient id="area" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#38BDF8" stop-opacity=".30"/><stop offset="1" stop-color="#38BDF8" stop-opacity="0"/></linearGradient>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse"><path d="M32 0H0V32" fill="none" stroke="#ffffff" stroke-opacity=".035"/></pattern>
+  </defs>
+  <rect width="1280" height="420" rx="24" fill="url(#bg)"/>
+  <rect width="1280" height="420" rx="24" fill="url(#grid)"/>
+  <g transform="translate(72 52) scale(1.0)">
+    <rect width="96" height="96" rx="22" fill="#38BDF8"/>
+    <circle cx="48" cy="48" r="29" fill="none" stroke="#0a1426" stroke-width="5"/>
+    <ellipse cx="48" cy="48" rx="12" ry="29" fill="none" stroke="#0a1426" stroke-width="4.5"/>
+    <path d="M19 48H77" stroke="#0a1426" stroke-width="4.5" stroke-linecap="round"/>
+    <path d="M24 33H72 M24 63H72" stroke="#0a1426" stroke-width="3.5" stroke-linecap="round" opacity=".75"/>
+  </g>
+  <text x="72" y="240" font-size="84" font-weight="800" fill="#E6EEF8" letter-spacing="-2">GlobalPulse</text>
+  <rect x="76" y="258" width="64" height="6" rx="3" fill="#38BDF8"/>
+  <text x="72" y="312" font-size="26" font-weight="500" fill="#B7C5D9">Live public data for your AI assistant.</text>
+  <text x="72" y="346" font-size="26" font-weight="500" fill="#B7C5D9">11 read-only tools. No key, no account.</text>
+  <g transform="translate(640 48)">
+    <rect width="576" height="324" rx="18" fill="#08101f" stroke="#223455"/>
+    <text x="28" y="40" font-size="17" font-weight="700" fill="#E6EEF8">Mumbai: 7-day maximum temperature</text>
+    <text x="28" y="62" font-size="13" fill="#93A5BF">weather_get_forecast · Open-Meteo · recorded 22 Nov 2026</text>
+    <g transform="translate(0 22)">
+      <path d="M60 70 H516 M60 130.0 H516 M60 190 H516" stroke="#ffffff" stroke-opacity=".07"/>
+      <path d="M60.0 90.0 L151.2 98.0 L242.4 94.0 L333.6 102.0 L424.8 170.0 L516.0 122.0 L516.0 204 L60.0 204 Z" fill="url(#area)"/>
+      <path class="line" pathLength="1" d="M60.0 90.0 L151.2 98.0 L242.4 94.0 L333.6 102.0 L424.8 170.0 L516.0 122.0" fill="none" stroke="#38BDF8" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle class="dot" cx="60.0" cy="90.0" r="6" fill="#38BDF8" stroke="#38BDF8" stroke-width="2.5"/><text x="60.0" y="222" font-size="12" text-anchor="middle" fill="#93A5BF">23 Nov</text>
+      <circle class="dot" cx="151.2" cy="98.0" r="4" fill="#08101f" stroke="#38BDF8" stroke-width="2.5"/><text x="151.2" y="222" font-size="12" text-anchor="middle" fill="#93A5BF">24 Nov</text>
+      <circle class="dot" cx="242.4" cy="94.0" r="4" fill="#08101f" stroke="#38BDF8" stroke-width="2.5"/><text x="242.4" y="222" font-size="12" text-anchor="middle" fill="#93A5BF">25 Nov</text>
+      <circle class="dot" cx="333.6" cy="102.0" r="4" fill="#08101f" stroke="#38BDF8" stroke-width="2.5"/><text x="333.6" y="222" font-size="12" text-anchor="middle" fill="#93A5BF">26 Nov</text>
+      <circle class="dot" cx="424.8" cy="170.0" r="4" fill="#08101f" stroke="#38BDF8" stroke-width="2.5"/><text x="424.8" y="222" font-size="12" text-anchor="middle" fill="#93A5BF">27 Nov</text>
+      <circle class="dot" cx="516.0" cy="122.0" r="4" fill="#08101f" stroke="#38BDF8" stroke-width="2.5"/><text x="516.0" y="222" font-size="12" text-anchor="middle" fill="#93A5BF">28 Nov</text>
+      <text x="72.0" y="78.0" font-size="14" font-weight="700" fill="#E6EEF8">34.5 °C</text>
+    </g>
+    <g transform="translate(28 262)">
+      <g class="c1"><rect width="160" height="34" rx="17" fill="#0f2a44" stroke="#38BDF8" stroke-opacity=".6"/><text x="16" y="22" font-size="14" font-weight="600" fill="#BEE3FA">Codes mapped (M49)</text></g>
+      <g class="c2" transform="translate(170 0)"><rect width="180" height="34" rx="17" fill="#33290f" stroke="#FBBF24" stroke-opacity=".6"/><text x="16" y="22" font-size="14" font-weight="600" fill="#FCE7A8">Approximate: marked</text></g>
+      <g class="c3" transform="translate(360 0)"><rect width="160" height="34" rx="17" fill="#0e2f27" stroke="#34D399" stroke-opacity=".6"/><text x="16" y="22" font-size="14" font-weight="600" fill="#A7F0D4">Data year shown</text></g>
+    </g>
+  </g>
+  <text x="72" y="396" font-size="14" fill="#93A5BF">World Bank · Open-Meteo · UN GDACS · UN Comtrade · adsb.lol · mledoze/countries</text>
+</svg>
