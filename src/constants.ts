@@ -4,7 +4,7 @@ export const API_ENDPOINTS = {
   OPEN_METEO_ARCHIVE: "https://archive-api.open-meteo.com/v1",
   GDACS: "https://www.gdacs.org/gdacsapi/api",
   OPENSKY: "https://opensky-network.org/api",
-  UN_COMTRADE: "https://comtradeapi.un.org/public/v1/preview",
+  UN_COMTRADE: "https://comtradeapi.un.org/public/v1/preview/C/A",
   REST_COUNTRIES: "https://restcountries.com/v3.1",
 } as const;
 
