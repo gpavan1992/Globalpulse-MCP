@@ -25,7 +25,7 @@ Nothing returned by the Service is financial, investment, trade, legal, medical,
 
 ## 5. Third-party sources and their terms
 
-The Service forwards your tool parameters to these providers: World Bank Open Data, Open-Meteo, UN GDACS, UN Comtrade, mledoze/countries (ODbL 1.0), adsb.lol and adsb.fi. Their data remains subject to their own licences and terms, and each is credited in tool output. Some providers restrict commercial use or require attribution (for example adsb.fi describes its data as for personal, non-commercial use). If you use the data beyond casual personal or research use, you are responsible for reading and complying with each provider's terms. The Operator is not affiliated with or endorsed by any provider.
+The Service forwards your tool parameters to these providers: World Bank Open Data, Open-Meteo, UN GDACS, UN Comtrade, mledoze/countries (ODbL 1.0) and adsb.lol. Their data remains subject to their own licences and terms, and each is credited in tool output. Flight data comes from adsb.lol under the ODbL 1.0. If you use the data beyond casual personal or research use, you are responsible for reading and complying with each provider's terms. The Operator is not affiliated with or endorsed by any provider.
 
 ## 6. Acceptable use
 

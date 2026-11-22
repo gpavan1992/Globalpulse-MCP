@@ -4,7 +4,7 @@ import { ResponseFormat, CHARACTER_LIMIT, DEFAULT_LIMIT } from "../constants.js"
 import { truncateText } from "../services/http.js";
 import { formatOutput, markdownTable } from "../services/formatters.js";
 import {
-  MAX_TILES, MAX_RADIUS_NM, MAX_COUNTRY_TILES, COUNTRIES, boxToCircles, fetchCircles, toFlightState, attribution, findCountry, inIcaoBlock,
+  adsbFiEnabled, MAX_TILES, MAX_RADIUS_NM, MAX_COUNTRY_TILES, COUNTRIES, boxToCircles, fetchCircles, toFlightState, attribution, findCountry, inIcaoBlock,
 } from "../services/adsb.js";
 
 const fmtAlt = (m: number | null, ground: boolean): string => (ground ? "Ground" : m === null ? "N/A" : `${m.toFixed(0)}m`);
@@ -15,7 +15,7 @@ export function registerAviationTools(server: McpServer): void {
   server.registerTool("globalpulse_aviation_get_live_flights", {
     title: "Get Live Flights",
     description: `Live ADS-B flight tracking for a geographic bounding box. Real-time position, altitude, speed, heading, registration and aircraft type.
-Data: adsb.lol (primary), adsb.fi (fallback). The box is converted to a centre point + radius; boxes wider than ${MAX_RADIUS_NM} nm are split into several circles (one upstream request each, at most ${MAX_TILES}). Results are cached for 60 s per area, so repeat calls cost no upstream requests. A whole-country box can use ~25 requests of a shared daily quota.
+Data: ${adsbFiEnabled() ? "adsb.lol (primary), adsb.fi (fallback)" : "adsb.lol (ODbL 1.0)"}. The box is converted to a centre point + radius; boxes wider than ${MAX_RADIUS_NM} nm are split into several circles (one upstream request each, at most ${MAX_TILES}). Results are cached for 60 s per area, so repeat calls cost no upstream requests. A whole-country box can use ~25 requests of a shared daily quota.
 Args: min_latitude, max_latitude, min_longitude, max_longitude (min must be <= max; boxes crossing the antimeridian are not supported), limit, on_ground_only, response_format
 Examples: Delhi area: min_lat=26.5, max_lat=30.5, min_lon=75, max_lon=79 | Germany: min_lat=47, max_lat=55.1, min_lon=5.8, max_lon=15.1`,
     inputSchema: z.object({
@@ -48,7 +48,8 @@ Examples: Delhi area: min_lat=26.5, max_lat=30.5, min_lon=75, max_lon=79 | Germa
       flights = flights.slice(0, limit);
       const output = formatOutput({ total, flights, tiles: res.tiles, upstream_requests: res.requests, cached_tiles: res.cachedTiles, failed_tiles: res.failedTiles, sources: res.providers }, () => {
         const rows = flights.map(f => [f.callsign ?? f.icao24, f.registration ?? "N/A", f.aircraft_type ?? "N/A", fmtPos(f.latitude), fmtPos(f.longitude), fmtAlt(f.altitude_m, f.on_ground), fmtSpeed(f.velocity_ms)]);
-        const warn = res.failedTiles ? `\n⚠️ ${res.failedTiles} of ${res.tiles} area requests failed, so results are incomplete. Cause: ${res.failures[0]}\n` : "";
+        const stale = res.staleTiles ? `\n⚠️ adsb.lol is temporarily rate-limited: ${res.staleTiles} of ${res.tiles} areas show cached data up to ${res.staleAgeSec} s old.\n` : "";
+        const warn = stale + (res.failedTiles ? `\n⚠️ ${res.failedTiles} of ${res.tiles} area requests failed, so results are incomplete. Cause: ${res.failures[0]}\n` : "");
         return `## Live Flights — [${min_latitude}°–${max_latitude}°N, ${min_longitude}°–${max_longitude}°E]\n**Aircraft tracked:** ${total} | **Timestamp:** ${new Date(res.nowMs).toUTCString()} | **Upstream requests:** ${res.requests} (${res.cachedTiles} of ${res.tiles} areas served from cache)\n${warn}\n${markdownTable(["Callsign", "Reg", "Type", "Lat", "Lon", "Altitude", "Speed"], rows)}\n\n${attribution(res.providers)}`;
       }, response_format);
       return { content: [{ type: "text", text: truncateText(output, CHARACTER_LIMIT) }] };
@@ -62,7 +63,7 @@ Examples: Delhi area: min_lat=26.5, max_lat=30.5, min_lon=75, max_lon=79 | Germa
     description: `APPROXIMATE live airborne flights registered in a country. Supported: India, Germany, United States (also IN, DE, US, USA).
 ADS-B sources have no per-country query, so this samples ${MAX_RADIUS_NM} nm circles around major hubs and keeps aircraft whose ICAO24 address belongs to that country's allocated block (i.e. registered there, wherever they are inside the sampled areas). Hubs — India: Delhi, Mumbai, Bengaluru, Chennai, Kolkata, Hyderabad; Germany: Frankfurt, Munich, Berlin, Hamburg; United States: New York, Atlanta, Chicago, Dallas, Denver, Los Angeles, Seattle, Miami (Alaska and Hawaii not covered).
 At most ${MAX_COUNTRY_TILES} hubs are sampled per call, so the United States is flagged "partial coverage" (the last two hubs, Seattle and Miami, are skipped). Counts are partial, not a national total, and aircraft far from the sampled hubs are missed.
-Each call makes at most ${MAX_COUNTRY_TILES} upstream requests against adsb.lol (fallback adsb.fi); results are cached for 60 s, so repeat calls cost none.
+Each call makes at most ${MAX_COUNTRY_TILES} upstream requests against adsb.lol${adsbFiEnabled() ? " (fallback adsb.fi)" : ""}; results are cached for 60 s, so repeat calls cost none.
 Args: country, limit, response_format`,
     inputSchema: z.object({
       country: z.string().min(2),
@@ -91,7 +92,8 @@ Args: country, limit, response_format`,
       const output = formatOutput({ country: cfg.name, approximate: true, partial_coverage: capped, sampled_hubs: hubs.map(h => h.name), hubs_not_sampled: skipped, total, flights, tiles: res.tiles, upstream_requests: res.requests, cached_tiles: res.cachedTiles, failed_tiles: res.failedTiles, sources: res.providers }, () => {
         const rows = flights.map(f => [f.callsign ?? f.icao24, f.registration ?? "N/A", f.aircraft_type ?? "N/A", fmtPos(f.latitude), fmtPos(f.longitude), fmtAlt(f.altitude_m, false), fmtSpeed(f.velocity_ms)]);
         const cap = capped ? `\n⚠️ **Partial coverage:** only the first ${hubs.length} of ${cfg.hubs.length} hubs are sampled per call (not sampled: ${skipped.join(", ")}).\n` : "";
-        const warn = cap + (res.failedTiles ? `\n⚠️ ${res.failedTiles} of ${res.tiles} hub requests failed, so results are even less complete. Cause: ${res.failures[0]}\n` : "");
+        const stale = res.staleTiles ? `\n⚠️ adsb.lol is temporarily rate-limited: ${res.staleTiles} of ${res.tiles} hubs show cached data up to ${res.staleAgeSec} s old.\n` : "";
+        const warn = cap + stale + (res.failedTiles ? `\n⚠️ ${res.failedTiles} of ${res.tiles} hub requests failed, so results are even less complete. Cause: ${res.failures[0]}\n` : "");
         return `## Live ${cfg.name} Flights (approximate)\n**Airborne ${cfg.name}-registered aircraft found:** ${total} | **Time:** ${new Date(res.nowMs).toUTCString()}\n*Sampled ${res.tiles} circles (${MAX_RADIUS_NM} nm) around ${hubs.map(h => h.name).join(", ")}; not a national total. Upstream requests: ${res.requests} (${res.cachedTiles} of ${res.tiles} from cache).*\n${warn}\n${markdownTable(["Callsign", "Reg", "Type", "Lat", "Lon", "Altitude", "Speed"], rows)}\n\n${attribution(res.providers)}`;
       }, response_format);
       return { content: [{ type: "text", text: truncateText(output, CHARACTER_LIMIT) }] };

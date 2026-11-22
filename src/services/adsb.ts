@@ -2,7 +2,7 @@ import { API_ENDPOINTS } from "../constants.js";
 import { fetchJson, describeError, HttpError } from "./http.js";
 import type { FlightState } from "../types.js";
 
-/** adsb.lol rejects radii above 250 nm (HTTP 403); adsb.fi caps `dist` at 250 nm too. */
+/** adsb.lol rejects radii above 250 nm (HTTP 403). */
 export const MAX_RADIUS_NM = 250;
 /** Upper bound on upstream requests for one tool call (adsb.lol reports ~500 requests/day/IP). */
 export const MAX_TILES = 25;
@@ -12,13 +12,29 @@ const TILE_CONCURRENCY = 2;
 export const MAX_COUNTRY_TILES = 6;
 const CACHE_TTL_MS = 60_000;
 const CACHE_MAX_ENTRIES = 500;
-/** On HTTP 429, wait this long at most (once) for adsb.lol before falling back to adsb.fi. */
+/** On HTTP 429, wait this long at most (once) for adsb.lol before giving up (or falling back to adsb.fi when enabled). */
 const MAX_RETRY_AFTER_S = 5;
 /** Cooldown used when adsb.lol answers 429 without a usable retry-after header. */
 const DEFAULT_COOLDOWN_S = 10;
 /** adsb.fi public endpoints are limited to 1 request/second. */
 const FI_MIN_INTERVAL_MS = 1100;
 const NM_PER_DEG = 60;
+/** Expired cache entries may still be served this long when adsb.lol is rate-limiting us. */
+const MAX_STALE_MS = 15 * 60_000;
+
+/** adsb.fi is off unless ADSBFI_ENABLED is "true" or "1". Read at call time so tests and restarts see changes. */
+export function adsbFiEnabled(): boolean {
+  const v = (process.env["ADSBFI_ENABLED"] ?? "").trim().toLowerCase();
+  return v === "true" || v === "1";
+}
+
+/** adsb.lol answered 429 (or is cooling down after one). `retryAfterSec` is how long until it should accept requests again. */
+export class RateLimitError extends Error {
+  constructor(public retryAfterSec: number, public requests = 0) {
+    super(`adsb.lol is temporarily rate-limited, retry in ${Math.max(1, Math.ceil(retryAfterSec))} s.`);
+    this.name = "RateLimitError";
+  }
+}
 
 export type Provider = "adsb.lol" | "adsb.fi";
 
@@ -32,7 +48,7 @@ export interface RawAircraft {
 interface LolResponse { ac?: RawAircraft[]; now?: number }
 interface FiResponse { aircraft?: RawAircraft[]; now?: number }
 
-export interface CircleResult { aircraft: RawAircraft[]; nowMs: number; provider: Provider; cached: boolean; requests: number }
+export interface CircleResult { aircraft: RawAircraft[]; nowMs: number; provider: Provider; cached: boolean; requests: number; stale?: boolean; staleAgeMs?: number }
 
 class UpstreamError extends Error {
   constructor(message: string, public requests: number) { super(message); this.name = "UpstreamError"; }
@@ -46,6 +62,10 @@ export interface MultiResult {
   /** Upstream HTTP requests actually made (cache hits cost 0). */
   requests: number;
   cachedTiles: number;
+  /** Tiles served from expired cache entries because adsb.lol was rate-limiting. */
+  staleTiles: number;
+  /** Age in seconds of the oldest stale tile served (0 if none). */
+  staleAgeSec: number;
   failedTiles: number;
   failures: string[];
 }
@@ -130,9 +150,10 @@ async function fetchUncached(c: Circle): Promise<Omit<CircleResult, "cached">> {
     const d = await fetchJson<LolResponse>(lolUrl);
     return { aircraft: d.ac ?? [], nowMs: toMs(d.now), provider: "adsb.lol", requests };
   };
+  const useFi = adsbFiEnabled();
   try {
     const cooling = lolCooldownUntil - Date.now();
-    if (cooling > 0) throw new Error(`skipped, rate-limited (cooling down for another ${Math.ceil(cooling / 1000)}s)`);
+    if (cooling > 0) throw new RateLimitError(cooling / 1000, 0);
     try {
       return await lolAttempt();
     } catch (err) {
@@ -144,13 +165,20 @@ async function fetchUncached(c: Circle): Promise<Omit<CircleResult, "cached">> {
         try {
           return await lolAttempt();
         } catch (retryErr) {
-          if (retryErr instanceof HttpError && retryErr.status === 429) noteLolRateLimit(retryErr);
+          if (retryErr instanceof HttpError && retryErr.status === 429) {
+            noteLolRateLimit(retryErr);
+            throw new RateLimitError(retryErr.retryAfterSec ?? DEFAULT_COOLDOWN_S, requests);
+          }
           throw retryErr;
         }
       }
-      throw err;
+      throw new RateLimitError(err.retryAfterSec ?? DEFAULT_COOLDOWN_S, requests);
     }
   } catch (lolErr) {
+    if (!useFi) {
+      if (lolErr instanceof RateLimitError) { lolErr.requests = requests; throw lolErr; }
+      throw new UpstreamError(`adsb.lol failed: ${describeError(lolErr)}`, requests);
+    }
     try {
       await fiSlot();
       requests++;
@@ -166,13 +194,13 @@ const cache = new Map<string, { at: number; value: Promise<Omit<CircleResult, "c
 
 function pruneCache(now: number): void {
   if (cache.size <= CACHE_MAX_ENTRIES) return;
-  for (const [k, e] of cache) if (now - e.at >= CACHE_TTL_MS) cache.delete(k);
+  for (const [k, e] of cache) if (now - e.at >= MAX_STALE_MS) cache.delete(k);
   while (cache.size > CACHE_MAX_ENTRIES) cache.delete(cache.keys().next().value as string);
 }
 
 export function clearAdsbCache(): void { cache.clear(); }
 
-/** adsb.lol first, adsb.fi if that fails. After a 429, adsb.lol is skipped until its retry-after elapses (one short retry-after is honoured by the request that hit it). 60 s in-memory cache; failures are never cached. */
+/** adsb.lol first (adsb.fi only if ADSBFI_ENABLED). After a 429, adsb.lol is skipped until its retry-after elapses (one short retry-after is honoured by the request that hit it). 60 s in-memory cache; failures are never cached, but an expired entry (up to 15 min old) is served if adsb.lol is rate-limiting. */
 export async function fetchCircle(input: Circle): Promise<CircleResult> {
   const c = normalize(input);
   const key = `${c.lat}/${c.lon}/${c.radius_nm}`;
@@ -187,6 +215,13 @@ export async function fetchCircle(input: Circle): Promise<CircleResult> {
     return { ...(await entry.value), cached: false };
   } catch (err) {
     if (cache.get(key) === entry) cache.delete(key);
+    if (err instanceof RateLimitError && hit && now - hit.at < MAX_STALE_MS) {
+      const value = await hit.value.catch(() => undefined);
+      if (value) {
+        cache.set(key, hit); // keep it for later rate-limited calls; it is still expired, so never served as fresh
+        return { ...value, cached: true, stale: true, requests: err.requests, staleAgeMs: now - hit.at } as CircleResult;
+      }
+    }
     throw err;
   }
 }
@@ -196,6 +231,7 @@ export async function fetchCircles(circles: Circle[]): Promise<MultiResult> {
   const results: CircleResult[] = [];
   const failures: string[] = [];
   let failedRequests = 0;
+  let rateLimit: RateLimitError | undefined;
   let next = 0;
   await Promise.all(Array.from({ length: Math.min(TILE_CONCURRENCY, circles.length) }, async () => {
     while (next < circles.length) {
@@ -203,10 +239,12 @@ export async function fetchCircles(circles: Circle[]): Promise<MultiResult> {
       try { results.push(await fetchCircle(c)); }
       catch (err) {
         failures.push(err instanceof Error ? err.message : String(err));
-        if (err instanceof UpstreamError) failedRequests += err.requests;
+        if (err instanceof RateLimitError) { rateLimit = rateLimit ? new RateLimitError(Math.min(rateLimit.retryAfterSec, err.retryAfterSec)) : err; failedRequests += err.requests; }
+        else if (err instanceof UpstreamError) failedRequests += err.requests;
       }
     }
   }));
+  if (results.length === 0 && rateLimit) throw new RateLimitError(Math.max(0, lolCooldownUntil - Date.now()) / 1000 || rateLimit.retryAfterSec);
   if (results.length === 0) throw new Error(`All ${circles.length} upstream request(s) failed. ${failures[0] ?? ""}`.trim());
 
   const byHex = new Map<string, RawAircraft>();
@@ -222,6 +260,8 @@ export async function fetchCircles(circles: Circle[]): Promise<MultiResult> {
     tiles: circles.length,
     requests: results.reduce((n, r) => n + r.requests, 0) + failedRequests,
     cachedTiles: results.filter(r => r.cached).length,
+    staleTiles: results.filter(r => r.stale).length,
+    staleAgeSec: Math.round(Math.max(0, ...results.map(r => r.staleAgeMs ?? 0)) / 1000),
     failedTiles: failures.length,
     failures: [...new Set(failures)],
   };
@@ -247,10 +287,12 @@ export function toFlightState(a: RawAircraft, nowMs: number): FlightState {
   };
 }
 
-/** Footer credit. adsb.fi's terms require citing adsb.fi with a link, so both providers are always named. */
+/** Footer credit. adsb.fi is named only when it is enabled (its terms require citing it); otherwise adsb.lol alone, with its ODbL licence. */
 export function attribution(providers: Provider[]): string {
+  const lol = "[adsb.lol](https://adsb.lol), licensed under [ODbL 1.0](https://opendatacommons.org/licenses/odbl/1-0/)";
+  if (!adsbFiEnabled() && !providers.includes("adsb.fi")) return `*Data: ${lol}.*`;
   const served = providers.join(" + ");
-  return `*Data: [adsb.lol](https://adsb.lol) (primary), [adsb.fi](https://adsb.fi) (fallback). Served by: ${served}.*`;
+  return `*Data: ${lol} (primary), [adsb.fi](https://adsb.fi) (fallback). Served by: ${served}.*`;
 }
 
 // ---- per-country approximation ------------------------------------------

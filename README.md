@@ -42,7 +42,7 @@ Health check: https://globalpulse-mcp-production.up.railway.app/health
 | `globalpulse_disasters_get_active` | Live global disaster alerts (earthquakes, cyclones, floods, volcanoes) |
 | `globalpulse_disasters_get_by_country` | Disaster history for a specific country |
 
-### ✈️ Aviation — adsb.lol (fallback: adsb.fi)
+### ✈️ Aviation — adsb.lol
 
 | Tool | Description |
 |---|---|
@@ -126,7 +126,7 @@ Once connected, ask your AI agent:
 | Macroeconomics | [World Bank Open Data](https://data.worldbank.org) | CC BY 4.0 | No |
 | Weather & Climate | [Open-Meteo](https://open-meteo.com) + ERA5 | CC BY 4.0 | No |
 | Disaster Alerts | [UN GDACS](https://www.gdacs.org) | UN Open Data | No |
-| Aviation | [adsb.lol](https://adsb.lol) (primary), [adsb.fi](https://adsb.fi) (fallback) | adsb.lol: see its site. adsb.fi: personal, non-commercial use, attribution required | No |
+| Aviation | [adsb.lol](https://adsb.lol) | [ODbL 1.0](https://opendatacommons.org/licenses/odbl/1-0/), attribution required | No |
 | Trade Flows | [UN Comtrade](https://comtradeplus.un.org) | UN Open Data | No (free tier) |
 | Country Data | [mledoze/countries](https://github.com/mledoze/countries) (static list, cached 24 h) | ODbL 1.0 | No |
 
@@ -138,8 +138,8 @@ Once connected, ask your AI agent:
 - Weather coordinates use **decimal degrees** (e.g. `19.076, 72.877` for Mumbai)
 - Aviation velocity is displayed as km/h
 - UN Comtrade free tier: limited requests/day — use `"TOTAL"` for `commodity_code` for best availability
-- Aviation data comes from [adsb.lol](https://adsb.lol), falling back to [adsb.fi](https://adsb.fi) if adsb.lol fails. adsb.fi's terms allow personal, non-commercial use only and require citing adsb.fi with a link — responses name the provider that served them
-- Aviation limits: both APIs cap the search radius at 250 nm. adsb.lol reports a quota of about 500 requests per day per IP (`x-ratelimit-limit` header) and returns HTTP 429 when bursts exceed its limit; adsb.fi allows 1 request per second. Each tool call can make several upstream requests (a large box up to 25; by-country at most 6), at most 2 in flight at a time. Results are cached in memory for 60 s per area, so repeat calls cost none. When adsb.lol answers HTTP 429, it is skipped (adsb.fi is used directly) until its `retry-after` elapses, or 10 s if no header is sent; the request that hit the 429 waits and retries once if the `retry-after` is 5 s or less
+- Aviation data comes from [adsb.lol](https://adsb.lol) under the [ODbL 1.0](https://opendatacommons.org/licenses/odbl/1-0/); responses carry that attribution. [adsb.fi](https://adsb.fi) can be enabled as a fallback for your own deployment with `ADSBFI_ENABLED=true` (default `false`, and off on the public server). adsb.fi's terms allow personal, non-commercial use only and require citing adsb.fi with a link, so check them first; when enabled, responses name the provider that served them
+- Aviation limits: adsb.lol caps the search radius at 250 nm, reports a quota of about 500 requests per day per IP (`x-ratelimit-limit` header) and returns HTTP 429 when bursts exceed its limit. Each tool call can make several upstream requests (a large box up to 25; by-country at most 6), at most 2 in flight at a time. Results are cached in memory for 60 s per area, so repeat calls cost none. When adsb.lol answers HTTP 429, it is skipped until its `retry-after` elapses (10 s if no header is sent), and the request that hit the 429 waits and retries once if the `retry-after` is 5 s or less. While it is rate-limited, areas with a cached result (up to 15 minutes old) are served from the cache and flagged in the output; otherwise the tool returns "temporarily rate-limited, retry in N s"
 - `get_flights_by_country` is approximate: ADS-B sources have no per-country query, so it samples circles around major hubs and matches aircraft by ICAO24 address block (registered in that country). Alaska and Hawaii are not covered, and at most 6 hubs are sampled per call, so the United States is flagged as partial coverage (Seattle and Miami are skipped)
 - World Bank data lags 1–2 years for some indicators — use `end_year=2022` for best coverage
 
