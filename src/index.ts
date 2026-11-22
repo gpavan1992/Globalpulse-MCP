@@ -2,6 +2,8 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/streamableHttp.js";
 import express from "express";
+import { fileURLToPath } from "node:url";
+import path from "node:path";
 
 import { registerWorldBankTools } from "./tools/worldbank.js";
 import { registerWeatherTools } from "./tools/weather.js";
@@ -9,6 +11,8 @@ import { registerDisasterTools } from "./tools/disasters.js";
 import { registerAviationTools } from "./tools/aviation.js";
 import { registerTradeTools } from "./tools/trade.js";
 import { registerCountriesTools } from "./tools/countries.js";
+
+const ICON_PATH = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../assets/icon.png");
 
 const server = new McpServer({ name: "globalpulse-mcp-server", version: "1.0.0" });
 
@@ -31,6 +35,13 @@ async function runHttp(): Promise<void> {
   app.get("/health", (_req, res) => {
     res.json({ status: "ok", server: "globalpulse-mcp-server", version: "1.0.0" });
   });
+  const serveIcon = (_req: express.Request, res: express.Response) => {
+    res.type("image/png").sendFile(ICON_PATH, err => {
+      if (err && !res.headersSent) res.status(404).end();
+    });
+  };
+  app.get("/favicon.ico", serveIcon);
+  app.get("/icon.png", serveIcon);
   app.post("/mcp", async (req, res) => {
     const transport = new StreamableHTTPServerTransport({ sessionIdGenerator: undefined, enableJsonResponse: true });
     res.on("close", () => transport.close());
